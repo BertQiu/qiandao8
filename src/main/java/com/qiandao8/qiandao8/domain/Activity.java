@@ -45,7 +45,7 @@ public class Activity {
     /**
      * 用于标记type：周期生效的活动
      */
-    public static final int EFFECT_ROUTINE=1;
+    public static final int EFFECT_ROUTINE = 1;
 
 
     /**
@@ -56,39 +56,24 @@ public class Activity {
     @ToString.Exclude
     private List<ListComponent> listComponents = new ArrayList<>(8);
 
+
     /**
      * 需要的字符串格式: 姓名-aaa,手机
      * 用逗号分割每个对象
-     * 若对象有- 则表示 title-remarks!content
      *
      * @param str
      */
     public void setBasicComponents(String str) {
-        String[] textObj = str.split(",");
+        String[] textObj = str.split(BasicComponent.OBJECT_SEPARATOR);
         for (String obj : textObj) {
             BasicComponent bc = new BasicComponent();
-            // 存在内容
-            if (obj.contains("!")) {
-                String[] info_content = obj.split("!");
-                bc.setContent(info_content[1]);
-                //存在备注
-                System.out.println(info_content[0] + "ifo222");
-                if (info_content[0].contains("-")) {
-                    String[] title_remarks = info_content[0].split("-");
-                    bc.setTitle(title_remarks[0]);
-                    bc.setRemarks(title_remarks[1]);
-                } else {
-                    bc.setTitle(info_content[0]);
-                }
+            // 存在备注
+            if (obj.contains(BasicComponent.TITLE_REMARK_SEPARATOR)) {
+                String[] title_remarks = obj.split(BasicComponent.TITLE_REMARK_SEPARATOR);
+                bc.setTitle(title_remarks[0]);
+                bc.setRemarks(title_remarks[1]);
             } else {
-                //不存在内容
-                if (obj.contains("-")) {
-                    String[] title_remarks = obj.split("-");
-                    bc.setTitle(title_remarks[0]);
-                    bc.setRemarks(title_remarks[1]);
-                } else {
-                    bc.setTitle(obj);
-                }
+                bc.setTitle(obj);
             }
             this.basicComponents.add(bc);
         }
@@ -98,25 +83,70 @@ public class Activity {
      * 需要的字符串格式: 性别:男,女-年龄:20,30
      * 用-分割对象
      * title：options
-     * 被选中的option后有!
      *
      * @param str
      */
     public void setListComponents(String str) {
-        String[] objs = str.split("-");
+        String[] objs = str.split(ListComponent.OBJECT_SEPARATOR);
         for (String obj : objs) {
-            String[] title_opts = obj.split(":");
-            String[] opts = title_opts[1].split(",");
+            String[] title_opts = obj.split(ListComponent.TITLE_OPTS_SEPARATOR);
+            String[] opts = title_opts[1].split(ListComponent.OPTION_SEPARATOR);
             HashMap<String, Boolean> options = new HashMap<>();
             for (String opt : opts) {
-                if (opt.endsWith("!")) {
-                    options.put(opt.substring(0, opt.length() - 1), true);
-                } else {
-                    options.put(opt, false);
-                }
+                options.put(opt, false);
             }
             this.listComponents.add(new ListComponent(title_opts[0], options));
         }
 
     }
 }
+// * 若对象有- 则表示 title-remarks!content
+//      * 被选中的option后有!
+//    public void setBasicComponents(String str) {
+//        String[] textObj = str.split(",");
+//        for (String obj : textObj) {
+//            BasicComponent bc = new BasicComponent();
+//            // 存在内容
+//            if (obj.contains("!")) {
+//                String[] info_content = obj.split("!");
+//                bc.setContent(info_content[1]);
+//                //存在备注
+//                System.out.println(info_content[0] + "ifo222");
+//                if (info_content[0].contains("-")) {
+//                    String[] title_remarks = info_content[0].split("-");
+//                    bc.setTitle(title_remarks[0]);
+//                    bc.setRemarks(title_remarks[1]);
+//                } else {
+//                    bc.setTitle(info_content[0]);
+//                }
+//            } else {
+//                //不存在内容
+//                if (obj.contains("-")) {
+//                    String[] title_remarks = obj.split("-");
+//                    bc.setTitle(title_remarks[0]);
+//                    bc.setRemarks(title_remarks[1]);
+//                } else {
+//                    bc.setTitle(obj);
+//                }
+//            }
+//            this.basicComponents.add(bc);
+//        }
+//    }
+//
+//    public void setListComponents(String str) {
+//        String[] objs = str.split("-");
+//        for (String obj : objs) {
+//            String[] title_opts = obj.split(":");
+//            String[] opts = title_opts[1].split(",");
+//            HashMap<String, Boolean> options = new HashMap<>();
+//            for (String opt : opts) {
+//                if (opt.endsWith("!")) {
+//                    options.put(opt.substring(0, opt.length() - 1), true);
+//                } else {
+//                    options.put(opt, false);
+//                }
+//            }
+//            this.listComponents.add(new ListComponent(title_opts[0], options));
+//        }
+//
+//    }

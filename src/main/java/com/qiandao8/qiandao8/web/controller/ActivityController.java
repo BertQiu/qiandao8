@@ -1,6 +1,7 @@
 package com.qiandao8.qiandao8.web.controller;
 
 import com.qiandao8.qiandao8.common.ServerResponse;
+import com.qiandao8.qiandao8.common.annotation.RequireLogin;
 import com.qiandao8.qiandao8.domain.Activity;
 import com.qiandao8.qiandao8.service.IActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class ActivityController {
 
     @RequestMapping("createOneActivity.do")
     @ResponseBody
+    @RequireLogin
     public ServerResponse createOneActivity(Activity activity) {
         return activityService.createActivity(activity);
     }
