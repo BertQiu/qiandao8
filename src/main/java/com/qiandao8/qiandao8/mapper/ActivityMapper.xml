@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiandao8.qiandao8.mapper.ActivityMapper">
+  <resultMap id="BaseResultMap" type="com.qiandao8.qiandao8.domain.Activity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="event_name" jdbcType="VARCHAR" property="eventName" />
+    <result column="originator" jdbcType="VARCHAR" property="originator" />
+    <result column="start_time" jdbcType="TIME" property="startTime" />
+    <result column="end_time" jdbcType="TIME" property="endTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="participants_nums" jdbcType="INTEGER" property="participantsNums" />
+    <result column="create_time" jdbcType="TIME" property="createTime" />
+    <result column="update_time" jdbcType="TIME" property="updateTime" />
+    <result column="basic_selc" jdbcType="LONGVARCHAR" property="basicSelc" />
+    <result column="list_selc" jdbcType="LONGVARCHAR" property="listSelc" />
+  </resultMap>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.qiandao8.qiandao8.domain.Activity" useGeneratedKeys="true">
+    insert into `event` (event_name, originator, start_time, 
+      end_time, status, type, 
+      participants_nums, create_time, update_time, 
+      basic_selc, list_selct)
+    values (#{eventName,jdbcType=VARCHAR}, #{originator,jdbcType=VARCHAR}, #{startTime,jdbcType=TIME}, 
+      #{endTime,jdbcType=TIME}, #{status,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+      #{participantsNums,jdbcType=INTEGER}, now(),now(),
+      #{basicSelc,jdbcType=LONGVARCHAR}, #{listSelct,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.qiandao8.qiandao8.domain.Activity">
+    update `event`
+    set event_name = #{eventName,jdbcType=VARCHAR},
+      originator = #{originator,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIME},
+      end_time = #{endTime,jdbcType=TIME},
+      status = #{status,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      participants_nums = #{participantsNums,jdbcType=INTEGER},
+      update_time = now(),
+      basic_selc = #{basicSelc,jdbcType=LONGVARCHAR},
+      list_selct = #{listSelct,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, event_name, originator, start_time, end_time, status, type, participants_nums, 
+    create_time, update_time, basic_selc, list_selct
+    from `event`
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, event_name, originator, start_time, end_time, status, type, participants_nums, 
+    create_time, update_time, basic_selc, list_selct
+    from `event`
+  </select>
+</mapper>

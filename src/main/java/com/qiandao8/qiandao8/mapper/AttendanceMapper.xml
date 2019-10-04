@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiandao8.qiandao8.mapper.AttendanceMapper">
+  <resultMap id="BaseResultMap" type="com.qiandao8.qiandao8.domain.Attendance">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="event_id" jdbcType="BIGINT" property="eventId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="ip_addr" jdbcType="VARCHAR" property="ipAddr" />
+    <result column="check_in_time" jdbcType="TIME" property="checkInTime" />
+    <result column="current_location" jdbcType="VARCHAR" property="currentLocation" />
+    <result column="verify_password" jdbcType="VARCHAR" property="verifyPassword" />
+    <result column="basic_selc_info" jdbcType="LONGVARCHAR" property="basicSelcInfo" />
+    <result column="list_selc_info" jdbcType="LONGVARCHAR" property="listSelcInfo" />
+  </resultMap>
+
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.qiandao8.qiandao8.domain.Attendance" useGeneratedKeys="true">
+    insert into `attendance` (event_id, status, ip_addr, 
+      check_in_time, current_localtion, verify_password, 
+      basic_selc_info, list_selc_info)
+    values (#{eventId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, #{ipAddr,jdbcType=VARCHAR}, 
+      #{checkInTime,jdbcType=TIME}, #{currentLocaltion,jdbcType=VARCHAR}, #{verifyPassword,jdbcType=VARCHAR}, 
+      #{basicSelcInfo,jdbcType=LONGVARCHAR}, #{listSelcInfo,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.qiandao8.qiandao8.domain.Attendance">
+    update `attendance`
+    set event_id = #{eventId,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      ip_addr = #{ipAddr,jdbcType=VARCHAR},
+      check_in_time = #{checkInTime,jdbcType=TIME},
+      current_localtion = #{currentLocaltion,jdbcType=VARCHAR},
+      verify_password = #{verifyPassword,jdbcType=VARCHAR},
+      basic_selc_info = #{basicSelcInfo,jdbcType=LONGVARCHAR},
+      list_selc_info = #{listSelcInfo,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, event_id, status, ip_addr, check_in_time, current_localtion, verify_password, 
+    basic_selc_info, list_selc_info
+    from `attendance`
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, event_id, status, ip_addr, check_in_time, current_localtion, verify_password, 
+    basic_selc_info, list_selc_info
+    from `attendance`
+  </select>
+</mapper>

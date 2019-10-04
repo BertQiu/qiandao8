@@ -1,0 +1,38 @@
+spring:
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/qiandao8?serverTimezone=GMT%2B8&useSSL=false&useUnicode=true&characterEncoding=UTF-8
+      username: root
+      password: admin
+      initial-size: 2
+      max-active: 4
+      maxWait: 15000
+      validationQuery: SELECT 'x'    #验证连接
+      #配置监控页面
+      stat-view-servlet:
+        login-username: admin
+        login-password: 123456
+        allow:
+        deny: 192.168.9.123
+        url-pattern: '/druid/*'
+        enabled: true   #启用监控页面
+      web-stat-filter:
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+        url-pattern: '/*'
+        enabled: true
+#接收以.do为结尾的动态请求（.*都可以）
+#  mvc:
+#    pathmatch:
+#      use-suffix-pattern: true
+#mybatis的配置
+mybatis:
+#  mapper-locations:
+#  - 'classpath:org/bert/p2p/core/base/mapper/*Mapper.xml'    #配置映射文件
+  configuration:
+   log-prefix: mybatis
+#   log-impl: org.apache.ibatis.logging.log4j.Log4jImpl
+   log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+server:
+  port: 80
+

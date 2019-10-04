@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiandao8.qiandao8.mapper.UserInfoMapper">
+    <resultMap id="FullResultMap" type="com.qiandao8.qiandao8.domain.UserInfo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="CHAR" property="password"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="phone_number" jdbcType="CHAR" property="phoneNumber"/>
+        <result column="create_time" jdbcType="TIME" property="createTime"/>
+        <result column="update_time" jdbcType="TIME" property="updateTime"/>
+        <result column="last_login_time" jdbcType="TIME" property="lastLoginTime"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMap" type="com.qiandao8.qiandao8.domain.UserInfo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="phone_number" jdbcType="CHAR" property="phoneNumber"/>
+        <result column="create_time" jdbcType="TIME" property="createTime"/>
+        <result column="last_login_time" jdbcType="TIME" property="lastLoginTime"/>
+    </resultMap>
+
+    <sql id="full_column">nick_name, username, password,
+    email, phone_number, create_time,
+    update_time,last_login_time</sql>
+
+    <sql id="base_column">id, nick_name, username,
+    email, phone_number, create_time
+    </sql>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.qiandao8.qiandao8.domain.UserInfo"
+            useGeneratedKeys="true">
+        insert into `user_info` (nick_name, username, password, email, phone_number, create_time, update_time)
+        values (#{nickName,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=CHAR},
+                #{email,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=CHAR}, now(), now())
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.qiandao8.qiandao8.domain.UserInfo">
+        update `user_info`
+        set nick_name    = #{nickName,jdbcType=VARCHAR},
+            username     = #{username,jdbcType=VARCHAR},
+            password     = #{password,jdbcType=CHAR},
+            email        = #{email,jdbcType=VARCHAR},
+            phone_number = #{phoneNumber,jdbcType=CHAR},
+            update_time  = now()
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="base_column"/>
+        from `user_info`
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="base_column"/>
+        from `user_info`
+    </select>
+
+    <select id="getUserInfoByUsernameAndPassword" resultMap="BaseResultMap">
+        select
+        <include refid="base_column"/>
+        from user_info
+        where username=#{username} and password=#{password}
+    </select>
+
+    <update id="updateUserInfo" parameterType="com.qiandao8.qiandao8.domain.UserInfo">
+        update `user_info`
+        set nick_name    = #{nickName},
+            email        = #{email},
+            phone_number = #{phoneNumber},
+            update_time  = now()
+        where id = #{id}
+    </update>
+
+    <select id="getUserInfoByUnameNnameAndPhone" resultType="int">
+        select count(1)
+        from user_info
+        where username = #{username} and nick_name = #{nickName}
+        <choose>
+            <when test="phoneNumber == null">
+                and phone_number is null;
+            </when>
+            <otherwise>
+                and phone_number = #{phoneNumber};
+            </otherwise>
+        </choose>
+    </select>
+
+    <update id="updatePasswordByUsername">
+        update user_info
+        set password = #{password},
+            update_time  = now()
+        where username = #{username}
+    </update>
+
+    <update id="updateLastLoginTimeByPK"  >
+        update user_info
+        set last_login_time = now()
+        where id = #{PK}
+    </update>
+</mapper>
