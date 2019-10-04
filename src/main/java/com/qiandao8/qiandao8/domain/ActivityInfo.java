@@ -1,9 +1,8 @@
 package com.qiandao8.qiandao8.domain;
 
-import lombok.*;
-import org.springframework.stereotype.Service;
-
-import java.util.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author Bert Q

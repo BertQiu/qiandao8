@@ -13,6 +13,10 @@ public enum Const {
     /**
      * 需要更改用户密码的账号
      */
-    RESET_PASSWORD_ACCOUNT()
+    RESET_PASSWORD_ACCOUNT(),
 
+    /**
+     * 最近一次生成的活动
+     */
+    NEAREST_ACTIVITY(),
 }

@@ -1,6 +1,7 @@
 package com.qiandao8.qiandao8.web.controller;
 
 import com.qiandao8.qiandao8.common.ServerResponse;
+import com.qiandao8.qiandao8.common.annotation.RequireLogin;
 import com.qiandao8.qiandao8.service.IUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,5 +25,12 @@ public class LoginController {
     @ResponseBody
     public ServerResponse login(String username, String password) {
         return userInfoService.login(username,password);
+    }
+
+    @RequestMapping(value = "logout.do" ,method = RequestMethod.GET)
+    @ResponseBody
+    @RequireLogin
+    public ServerResponse logout(String username, String password) {
+        return userInfoService.logout();
     }
 }

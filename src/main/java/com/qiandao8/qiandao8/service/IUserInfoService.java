@@ -2,11 +2,6 @@ package com.qiandao8.qiandao8.service;
 
 import com.qiandao8.qiandao8.common.ServerResponse;
 import com.qiandao8.qiandao8.domain.UserInfo;
-import com.qiandao8.qiandao8.mapper.UserInfoMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author Bert Q
@@ -52,4 +47,6 @@ public interface IUserInfoService {
      * @return
      */
     ServerResponse changePassword(String newPassword);
+
+    ServerResponse logout();
 }

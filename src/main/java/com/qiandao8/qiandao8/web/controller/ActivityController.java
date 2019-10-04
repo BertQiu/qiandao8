@@ -6,7 +6,9 @@ import com.qiandao8.qiandao8.domain.Activity;
 import com.qiandao8.qiandao8.service.IActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -21,16 +23,38 @@ public class ActivityController {
     @Autowired
     private IActivityService activityService;
 
-    @RequestMapping("createOneActivity.do")
+    @RequestMapping(value = "createOneActivity.do",method = RequestMethod.POST)
     @ResponseBody
     @RequireLogin
     public ServerResponse createOneActivity(Activity activity) {
         return activityService.createActivity(activity);
     }
 
-    @RequestMapping("createRoutineActivity.do")
+    @RequestMapping(value = "createRoutineActivity.do",method = RequestMethod.POST)
     @ResponseBody
+    @RequireLogin
     public ServerResponse createRoutineActivity() {
         return null;
+    }
+
+    @RequestMapping(value = "getParticipantNumbers.do",method = RequestMethod.GET)
+    @ResponseBody
+    @RequireLogin
+    public ServerResponse getParticipantNumbers(Long aid) {
+        return activityService.getParticipantNumbers(aid);
+    }
+
+    @RequestMapping(value = "getActivity.do/{aid}" ,method = RequestMethod.GET)
+    @ResponseBody
+    @RequireLogin
+    public ServerResponse getActivity(@PathVariable Long aid) {
+        return activityService.getActivity(aid);
+    }
+
+    @RequestMapping(value = "getActivity.do",method = RequestMethod.GET)
+    @ResponseBody
+    @RequireLogin
+    public ServerResponse getActivity() {
+        return activityService.getActivity();
     }
 }

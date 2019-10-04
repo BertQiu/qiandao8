@@ -11,4 +11,10 @@ import com.qiandao8.qiandao8.domain.Activity;
 
 public interface IActivityService {
     ServerResponse createActivity(Activity activity);
+
+    ServerResponse getParticipantNumbers(Long id);
+
+    ServerResponse getActivity(Long aid);
+
+    ServerResponse getActivity();
 }

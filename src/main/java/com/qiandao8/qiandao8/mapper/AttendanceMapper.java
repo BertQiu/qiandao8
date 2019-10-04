@@ -1,6 +1,7 @@
 package com.qiandao8.qiandao8.mapper;
 
 import com.qiandao8.qiandao8.domain.Attendance;
+
 import java.util.List;
 
 public interface AttendanceMapper {

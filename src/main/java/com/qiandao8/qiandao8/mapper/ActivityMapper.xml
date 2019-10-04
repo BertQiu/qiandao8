@@ -5,6 +5,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="event_name" jdbcType="VARCHAR" property="eventName" />
     <result column="originator" jdbcType="VARCHAR" property="originator" />
+    <result column="originator_id" jdbcType="BIGINT" property="originatorId" />
     <result column="start_time" jdbcType="TIME" property="startTime" />
     <result column="end_time" jdbcType="TIME" property="endTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
@@ -16,38 +17,50 @@
     <result column="list_selc" jdbcType="LONGVARCHAR" property="listSelc" />
   </resultMap>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.qiandao8.qiandao8.domain.Activity" useGeneratedKeys="true">
-    insert into `event` (event_name, originator, start_time, 
+    insert into `activity` (event_name, originator,originator_id, start_time,
       end_time, status, type, 
       participants_nums, create_time, update_time, 
-      basic_selc, list_selct)
-    values (#{eventName,jdbcType=VARCHAR}, #{originator,jdbcType=VARCHAR}, #{startTime,jdbcType=TIME}, 
-      #{endTime,jdbcType=TIME}, #{status,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
-      #{participantsNums,jdbcType=INTEGER}, now(),now(),
-      #{basicSelc,jdbcType=LONGVARCHAR}, #{listSelct,jdbcType=LONGVARCHAR})
+      basic_selc, list_selc)
+    values (#{eventName}, #{originator}, #{originatorId}, #{startTime},
+      #{endTime}, #{status}, #{type},
+      #{participantsNums}, now(),now(),
+      #{basicSelc}, #{listSelc})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.qiandao8.qiandao8.domain.Activity">
-    update `event`
-    set event_name = #{eventName,jdbcType=VARCHAR},
-      originator = #{originator,jdbcType=VARCHAR},
-      start_time = #{startTime,jdbcType=TIME},
-      end_time = #{endTime,jdbcType=TIME},
-      status = #{status,jdbcType=INTEGER},
-      type = #{type,jdbcType=INTEGER},
-      participants_nums = #{participantsNums,jdbcType=INTEGER},
+    update `activity`
+    set event_name = #{eventName},
+      originator = #{originator},
+      start_time = #{startTime},
+      end_time = #{endTime},
+      status = #{status},
+      type = #{type},
+      participants_nums = #{participantsNums},
       update_time = now(),
-      basic_selc = #{basicSelc,jdbcType=LONGVARCHAR},
-      list_selct = #{listSelct,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=BIGINT}
+      basic_selc = #{basicSelc},
+      list_selc = #{listSelc}
+    where id = #{id}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select id, event_name, originator, start_time, end_time, status, type, participants_nums, 
-    create_time, update_time, basic_selc, list_selct
-    from `event`
-    where id = #{id,jdbcType=BIGINT}
+  <sql id="base_column">
+    id, event_name, originator, originator_id, start_time, end_time, status, type, participants_nums,
+    create_time, update_time, basic_selc, list_selc
+  </sql>
+  <select id="selectByPrimaryKey"  resultMap="BaseResultMap">
+    select <include refid="base_column"/>
+    from `activity`
+    where id = #{id}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, event_name, originator, start_time, end_time, status, type, participants_nums, 
-    create_time, update_time, basic_selc, list_selct
-    from `event`
+    select <include refid="base_column"/>
+    from `activity`
+  </select>
+  <update id="updateParticipantsNumByPK">
+    update activity
+    set participants_nums = #{participantsNum}
+    where id=#{id}
+  </update>
+  <select id="getParticipantsNum" resultType="int">
+    select participants_nums
+    from activity
+    where id=#{id}
   </select>
 </mapper>

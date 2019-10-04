@@ -1,7 +1,7 @@
 package com.qiandao8.qiandao8.service.impl;
 
-import com.qiandao8.qiandao8.common.Const;
 import com.qiandao8.qiandao8.common.ServerResponse;
+import com.qiandao8.qiandao8.common.SessionContext;
 import com.qiandao8.qiandao8.domain.UserInfo;
 import com.qiandao8.qiandao8.mapper.UserInfoMapper;
 import com.qiandao8.qiandao8.service.IUserInfoService;
@@ -10,8 +10,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.servlet.http.HttpSession;
 
 /**
  * @author Bert Q
@@ -24,8 +22,6 @@ public class UserServiceImpl implements IUserInfoService {
     @Autowired
     private UserInfoMapper userInfoMapper;
 
-    @Autowired
-    private HttpSession httpSession;
 
     @Override
     @Transactional
@@ -57,7 +53,8 @@ public class UserServiceImpl implements IUserInfoService {
             return ServerResponse.createByErrorMessage("登录失败，请检查用户名或密码！");
         }
         //将当前用户对象存放到session中
-        httpSession.setAttribute(Const.CURRENT_USER.name(),currentUser);
+//        httpSession.setAttribute(Const.CURRENT_USER.name(),currentUser);
+        SessionContext.putCurrentUser(currentUser);
         //更新最后一次登录的时间
         userInfoMapper.updateLastLoginTimeByPK(currentUser.getId());
         return ServerResponse.createBySuccessMessage("登录成功！");
@@ -66,7 +63,7 @@ public class UserServiceImpl implements IUserInfoService {
     @Override
     @Transactional
     public ServerResponse updateUserInfo(String nickName, String email, String phoneNumber) {
-        UserInfo currentUser = (UserInfo) httpSession.getAttribute(Const.CURRENT_USER.name());
+        UserInfo currentUser = SessionContext.getCurrentUser();
         if (currentUser == null) {
             return ServerResponse.createByErrorMessage("请先登录！");
         }
@@ -90,7 +87,7 @@ public class UserServiceImpl implements IUserInfoService {
         int count = userInfoMapper.getUserInfoByUnameNnameAndPhone(username, nickName, phoneNumber);
         // 存在用户
         if (count > 0) {
-            httpSession.setAttribute(Const.RESET_PASSWORD_ACCOUNT.name(),username);
+            SessionContext.putForgetPasswordUser(username);
             return ServerResponse.createBySuccess();
         }
         return ServerResponse.createByErrorMessage("未查询到对应用户");
@@ -99,16 +96,22 @@ public class UserServiceImpl implements IUserInfoService {
     @Override
     @Transactional
     public ServerResponse changePassword(String newPassword) {
-        String username = (String) httpSession.getAttribute(Const.RESET_PASSWORD_ACCOUNT.name());
+        String username = SessionContext.getForgetPasswordUser();
         if (username == null) {
             return ServerResponse.createByErrorMessage("更新密码失败！");
         }
         int count = userInfoMapper.updatePasswordByUsername(username, MD5Utils.getEncodingMD5(newPassword));
         if (count > 0) {
-            httpSession.removeAttribute(Const.RESET_PASSWORD_ACCOUNT.name());
+            SessionContext.removeForgetPasswordUser();
             return ServerResponse.createBySuccess("更新密码成功！");
         }
         return ServerResponse.createByErrorMessage("更新密码失败！");
+    }
+
+    @Override
+    public ServerResponse logout() {
+        SessionContext.removeCurrentUser();
+        return ServerResponse.createBySuccess();
     }
 
 

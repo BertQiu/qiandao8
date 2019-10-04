@@ -1,6 +1,6 @@
 package com.qiandao8.qiandao8.web.interceptor;
 
-import com.qiandao8.qiandao8.common.Const;
+import com.qiandao8.qiandao8.common.SessionContext;
 import com.qiandao8.qiandao8.common.annotation.RequireLogin;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -22,7 +22,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         if (handler instanceof HandlerMethod) {
             HandlerMethod hm = (HandlerMethod) handler;
             RequireLogin rL = hm.getMethodAnnotation(RequireLogin.class);
-            if (rL != null  && request.getSession().getAttribute(Const.CURRENT_USER.name()) == null) {
+            if (rL != null  && SessionContext.getCurrentUser() == null) {
                 response.sendRedirect("/login.html");
                 return false;
             }

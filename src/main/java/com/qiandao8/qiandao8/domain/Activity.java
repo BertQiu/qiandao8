@@ -1,8 +1,10 @@
 package com.qiandao8.qiandao8.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,10 +19,14 @@ public class Activity {
     @Setter
     private String eventName;
     @Setter
+    private Long originatorId;
+    @Setter
     private String originator;
     @Setter
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date startTime;
     @Setter
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date endTime;
     @Setter
     private Integer status;
@@ -49,12 +55,34 @@ public class Activity {
 
 
     /**
-     *
+     * 用于将特定字符串解析为json所用到的中间模型
      */
     @ToString.Exclude
+    @JsonIgnore
     private List<BasicComponent> basicComponents = new ArrayList<>(16);
     @ToString.Exclude
+    @JsonIgnore
     private List<ListComponent> listComponents = new ArrayList<>(8);
+
+    /**
+     * 表示活动状态处于正常 states
+     */
+    public static final int STATES_NORMAL = 0;
+
+    /**
+     * 表示活动结束了
+     */
+    public static final int STATES_FINISH = 1;
+
+    /**
+     * 表示活动被删除了
+     */
+    public static final int STATES_REMOVED = 2;
+
+    /**
+     * 表示活动因为各种原因，被管理员冻结了
+     */
+    public static final int STATES_FROZEN = 10;
 
 
     /**

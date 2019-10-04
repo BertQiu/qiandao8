@@ -29,7 +29,7 @@ public class MD5Utils {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] s = md.digest(str.getBytes());
-            String ss = "";
+            String ss;
             StringBuilder result = new StringBuilder();
             for (int i = 0; i < s.length; i++) {
                 ss = Integer.toHexString(s[i] & 0xff);
