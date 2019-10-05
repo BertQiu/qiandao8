@@ -2,20 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qiandao8.qiandao8.mapper.ActivityMapper">
   <resultMap id="BaseResultMap" type="com.qiandao8.qiandao8.domain.Activity">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="event_name" jdbcType="VARCHAR" property="eventName" />
-    <result column="originator" jdbcType="VARCHAR" property="originator" />
-    <result column="originator_id" jdbcType="BIGINT" property="originatorId" />
-    <result column="start_time" jdbcType="TIME" property="startTime" />
-    <result column="end_time" jdbcType="TIME" property="endTime" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="participants_nums" jdbcType="INTEGER" property="participantsNums" />
-    <result column="create_time" jdbcType="TIME" property="createTime" />
-    <result column="update_time" jdbcType="TIME" property="updateTime" />
-    <result column="basic_selc" jdbcType="LONGVARCHAR" property="basicSelc" />
-    <result column="list_selc" jdbcType="LONGVARCHAR" property="listSelc" />
-  </resultMap>
+  <id column="id" jdbcType="BIGINT" property="id" />
+  <result column="event_name" jdbcType="VARCHAR" property="eventName" />
+  <result column="originator" jdbcType="VARCHAR" property="originator" />
+  <result column="originator_id" jdbcType="BIGINT" property="originatorId" />
+  <result column="start_time" jdbcType="TIME" property="startTime" />
+  <result column="end_time" jdbcType="TIME" property="endTime" />
+  <result column="status" jdbcType="INTEGER" property="status" />
+  <result column="type" jdbcType="INTEGER" property="type" />
+  <result column="participants_nums" jdbcType="INTEGER" property="participantsNums" />
+  <result column="create_time" jdbcType="TIME" property="createTime" />
+  <result column="update_time" jdbcType="TIME" property="updateTime" />
+  <result column="basic_selc" jdbcType="LONGVARCHAR" property="basicSelc" />
+  <result column="list_selc" jdbcType="LONGVARCHAR" property="listSelc" />
+</resultMap>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.qiandao8.qiandao8.domain.Activity" useGeneratedKeys="true">
     insert into `activity` (event_name, originator,originator_id, start_time,
       end_time, status, type, 
@@ -58,9 +58,31 @@
     set participants_nums = #{participantsNum}
     where id=#{id}
   </update>
-  <select id="getParticipantsNum" resultType="int">
+  <select id="getParticipantsNum" resultType="java.lang.Integer">
     select participants_nums
     from activity
     where id=#{id}
+  </select>
+  <select id="listActivitiesByQueryObj" resultMap="BaseResultMap">
+    select <include refid="base_column"/>
+    from activity
+    <where>
+      originator_id = #{originatorId}
+      <if test="eventName!=null">
+        and event_name = #{eventName}
+      </if>
+      <if test="originator!=null">
+        and originator = #{originator}
+      </if>
+      <if test="status!=null">
+        and status = #{status}
+      </if>
+      <if test="startTime!=null">
+        and start_Time &gt; #{startTime}
+      </if>
+      <if test="endTime!=null">
+        and end_Time &lt; #{endTime}
+      </if>
+    </where>
   </select>
 </mapper>

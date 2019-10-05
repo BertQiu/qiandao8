@@ -3,6 +3,7 @@ package com.qiandao8.qiandao8.web.controller;
 import com.qiandao8.qiandao8.common.ServerResponse;
 import com.qiandao8.qiandao8.common.annotation.RequireLogin;
 import com.qiandao8.qiandao8.domain.Activity;
+import com.qiandao8.qiandao8.qo.ActivityQueryObject;
 import com.qiandao8.qiandao8.service.IActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,5 +57,12 @@ public class ActivityController {
     @RequireLogin
     public ServerResponse getActivity() {
         return activityService.getActivity();
+    }
+
+    @RequestMapping(value = "listAllActivity.do", method = RequestMethod.POST)
+    @ResponseBody
+    @RequireLogin
+    public ServerResponse listAllActivity(ActivityQueryObject queryObject) {
+        return activityService.listActivities(queryObject);
     }
 }

@@ -53,7 +53,6 @@ public class UserServiceImpl implements IUserInfoService {
             return ServerResponse.createByErrorMessage("登录失败，请检查用户名或密码！");
         }
         //将当前用户对象存放到session中
-//        httpSession.setAttribute(Const.CURRENT_USER.name(),currentUser);
         SessionContext.putCurrentUser(currentUser);
         //更新最后一次登录的时间
         userInfoMapper.updateLastLoginTimeByPK(currentUser.getId());
@@ -64,9 +63,7 @@ public class UserServiceImpl implements IUserInfoService {
     @Transactional
     public ServerResponse updateUserInfo(String nickName, String email, String phoneNumber) {
         UserInfo currentUser = SessionContext.getCurrentUser();
-        if (currentUser == null) {
-            return ServerResponse.createByErrorMessage("请先登录！");
-        }
+
         currentUser.setNickName(nickName);
         currentUser.setEmail(email);
         currentUser.setPhoneNumber(phoneNumber);

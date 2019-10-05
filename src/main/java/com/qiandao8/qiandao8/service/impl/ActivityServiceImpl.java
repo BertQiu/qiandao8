@@ -2,10 +2,13 @@ package com.qiandao8.qiandao8.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.qiandao8.qiandao8.common.ServerResponse;
 import com.qiandao8.qiandao8.common.SessionContext;
 import com.qiandao8.qiandao8.domain.Activity;
 import com.qiandao8.qiandao8.mapper.ActivityMapper;
+import com.qiandao8.qiandao8.qo.ActivityQueryObject;
 import com.qiandao8.qiandao8.service.IActivityService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +44,10 @@ public class ActivityServiceImpl implements IActivityService {
             activity.setParticipantsNums(0);
             activity.setOriginatorId(SessionContext.getCurrentUser().getId());
 
+            if (activity.getEndTime().getTime() < activity.getStartTime().getTime()) {
+                activity.setEndTime(activity.getStartTime());
+            }
+
             activity.setBasicSelc(objectMapper.writeValueAsString(activity.getBasicComponents()));
             activity.setListSelc(objectMapper.writeValueAsString(activity.getListComponents()));
 
@@ -64,7 +71,6 @@ public class ActivityServiceImpl implements IActivityService {
 
     @Override
     public ServerResponse getActivity(Long aid) {
-        System.out.println(aid);
         return ServerResponse.createBySuccess(activityMapper.selectByPrimaryKey(aid));
     }
 
@@ -75,5 +81,13 @@ public class ActivityServiceImpl implements IActivityService {
             return ServerResponse.createByErrorMessage("查询失败！");
         }
         return ServerResponse.createBySuccess(activityMapper.selectByPrimaryKey(nearestActivity.getId()));
+    }
+
+    @Override
+    public ServerResponse listActivities(ActivityQueryObject queryObject) {
+        queryObject.setOriginatorId(SessionContext.getCurrentUser().getId());
+        PageHelper.startPage(queryObject.getCurrentPage(), queryObject.getPageSize());
+        PageInfo<Activity> data = new PageInfo<>(activityMapper.listActivitiesByQueryObj(queryObject));
+        return ServerResponse.createBySuccess(data);
     }
 }

@@ -1,6 +1,7 @@
 package com.qiandao8.qiandao8.mapper;
 
 import com.qiandao8.qiandao8.domain.Activity;
+import com.qiandao8.qiandao8.qo.ActivityQueryObject;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface ActivityMapper {
     int updateParticipantsNumByPK(@Param("id") Long id, @Param("participantsNum") Integer participantsNum);
 
     int getParticipantsNum(Long id);
+
+    List<Activity> listActivitiesByQueryObj(ActivityQueryObject queryObject);
 }

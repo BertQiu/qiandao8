@@ -2,6 +2,7 @@ package com.qiandao8.qiandao8.service;
 
 import com.qiandao8.qiandao8.common.ServerResponse;
 import com.qiandao8.qiandao8.domain.Activity;
+import com.qiandao8.qiandao8.qo.ActivityQueryObject;
 
 /**
  * @author Bert Q
@@ -17,4 +18,6 @@ public interface IActivityService {
     ServerResponse getActivity(Long aid);
 
     ServerResponse getActivity();
+
+    ServerResponse listActivities(ActivityQueryObject queryObject);
 }
