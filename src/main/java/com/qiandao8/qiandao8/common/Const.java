@@ -1,8 +1,5 @@
 package com.qiandao8.qiandao8.common;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * @author Bert Q
  * @description //封装项目所使用的常量枚举
