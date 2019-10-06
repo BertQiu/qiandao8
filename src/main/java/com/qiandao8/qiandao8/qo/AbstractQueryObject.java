@@ -13,5 +13,4 @@ import lombok.Setter;
 public abstract class AbstractQueryObject {
     private Integer currentPage;
     private Integer pageSize;
-
 }

@@ -21,6 +21,8 @@ spring:
         exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
         url-pattern: '/*'
         enabled: true
+  jackson:
+    default-property-inclusion: non_null
 #接收以.do为结尾的动态请求（.*都可以）
 #  mvc:
 #    pathmatch:

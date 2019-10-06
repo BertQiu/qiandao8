@@ -20,4 +20,6 @@ public interface IActivityService {
     ServerResponse getActivity();
 
     ServerResponse listActivities(ActivityQueryObject queryObject);
+
+    void updateActivitiesStatus();
 }

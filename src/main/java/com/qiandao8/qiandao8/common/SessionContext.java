@@ -60,5 +60,17 @@ public class SessionContext {
         getSession().removeAttribute(Const.NEAREST_ACTIVITY.name());
     }
 
+    public static void putEnableAttendActivityPermission(Long  aid) {
+        getSession().setAttribute(Const.ENABLE_ATTEND_ACTIVITY_PERMISSION.name(), aid);
+    }
+
+    public static Long getEnableAttendActivityPermission() {
+        return (Long) getSession().getAttribute(Const.ENABLE_ATTEND_ACTIVITY_PERMISSION.name());
+    }
+
+    public static void removeEnableAttendActivityPermission() {
+        getSession().removeAttribute(Const.ENABLE_ATTEND_ACTIVITY_PERMISSION.name());
+    }
+
 
 }

@@ -18,5 +18,13 @@ public class Attendance {
     private String basicSelcInfo;
     private String listSelcInfo;
 
+    /**
+     * 表示签到状态处于正常 states
+     */
+    public static final int STATES_NORMAL = 0;
 
+    /**
+     * 表示迟到了
+     */
+    public static final int STATES_LATE = 1;
 }

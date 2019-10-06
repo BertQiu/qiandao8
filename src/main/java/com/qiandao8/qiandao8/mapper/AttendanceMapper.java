@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface AttendanceMapper {
 
-    int insert(Attendance record);
+    int insert(Attendance attendance);
 
     Attendance selectByPrimaryKey(Long id);
 
     List<Attendance> selectAll();
 
-    int updateByPrimaryKey(Attendance record);
+    int updateByPrimaryKey(Attendance attendance);
 }

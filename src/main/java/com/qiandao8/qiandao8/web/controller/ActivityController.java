@@ -35,6 +35,7 @@ public class ActivityController {
     @ResponseBody
     @RequireLogin
     public ServerResponse createRoutineActivity() {
+        // TODO 二期再完成
         return null;
     }
 
@@ -47,22 +48,22 @@ public class ActivityController {
 
     @RequestMapping(value = "getActivity.do/{aid}" ,method = RequestMethod.GET)
     @ResponseBody
-    @RequireLogin
     public ServerResponse getActivity(@PathVariable Long aid) {
         return activityService.getActivity(aid);
     }
 
     @RequestMapping(value = "getActivity.do",method = RequestMethod.GET)
     @ResponseBody
-    @RequireLogin
     public ServerResponse getActivity() {
         return activityService.getActivity();
     }
 
-    @RequestMapping(value = "listAllActivity.do", method = RequestMethod.POST)
+    @RequestMapping(value = "listAllActivities.do", method = RequestMethod.GET)
     @ResponseBody
     @RequireLogin
-    public ServerResponse listAllActivity(ActivityQueryObject queryObject) {
+    public ServerResponse listAllActivities(ActivityQueryObject queryObject) {
         return activityService.listActivities(queryObject);
     }
+
+
 }

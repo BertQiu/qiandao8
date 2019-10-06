@@ -4,6 +4,7 @@ import com.qiandao8.qiandao8.domain.Activity;
 import com.qiandao8.qiandao8.qo.ActivityQueryObject;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface ActivityMapper {
@@ -16,9 +17,17 @@ public interface ActivityMapper {
 
     int updateByPrimaryKey(Activity record);
 
+    int increaseParticipantsNumByPK(Long id);
+
     int updateParticipantsNumByPK(@Param("id") Long id, @Param("participantsNum") Integer participantsNum);
 
     int getParticipantsNum(Long id);
 
     List<Activity> listActivitiesByQueryObj(ActivityQueryObject queryObject);
+
+    List<Long> listFinishedActivities(Date endTime);
+
+    int updateActivitiesStatus(@Param("id") Long id,@Param("status") Integer status);
+
+    int getOngoingActivity(Long id);
 }
