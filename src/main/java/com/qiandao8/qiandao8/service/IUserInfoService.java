@@ -49,4 +49,6 @@ public interface IUserInfoService {
     ServerResponse changePassword(String newPassword);
 
     ServerResponse logout();
+
+    ServerResponse getCurrentUser();
 }

@@ -41,4 +41,10 @@ public class UserInfoController {
         return userInfoService.changePassword(newPassword);
     }
 
+    @RequestMapping(value = "getCurrentUser.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse getCurrentUser() {
+        return userInfoService.getCurrentUser();
+    }
+
 }

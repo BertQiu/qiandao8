@@ -111,5 +111,14 @@ public class UserServiceImpl implements IUserInfoService {
         return ServerResponse.createBySuccess();
     }
 
+    @Override
+    public ServerResponse getCurrentUser() {
+        UserInfo currentUser = SessionContext.getCurrentUser();
+        if (currentUser == null) {
+            return ServerResponse.createByErrorMessage("未登陆，请先登录！");
+        }
+        return ServerResponse.createBySuccess(currentUser);
+    }
+
 
 }

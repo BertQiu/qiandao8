@@ -20,7 +20,7 @@
         <result column="email"  property="email"/>
         <result column="phone_number"  property="phoneNumber"/>
         <result column="create_time"  property="createTime"/>
-        <result column="last_login_time" " property="lastLoginTime"/>
+        <result column="last_login_time"  property="lastLoginTime"/>
     </resultMap>
 
     <sql id="full_column">nick_name, username, password,
