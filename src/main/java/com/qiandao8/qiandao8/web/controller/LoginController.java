@@ -28,9 +28,9 @@ public class LoginController {
     }
 
     @RequestMapping(value = "logout.do" ,method = RequestMethod.GET)
-    @ResponseBody
     @RequireLogin
-    public ServerResponse logout(String username, String password) {
-        return userInfoService.logout();
+    public String logout() {
+        userInfoService.logout();
+        return "index.html";
     }
 }

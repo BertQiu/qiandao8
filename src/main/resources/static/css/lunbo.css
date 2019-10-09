@@ -1,0 +1,24 @@
+.lunbo {
+    width: 100%;
+    margin-top: 51px;
+    position: relative;
+    overflow: hidden;
+}
+.lunbo img{
+    width:auto;
+    height:auto;
+    max-width:100%;
+    max-height:100%;
+}
+.lunbo .glyphicon{
+    line-height: 100%;
+    top: 50%;
+    margin-top: -40px;
+    font-size: 32px;
+}
+.lunbo button{
+    margin-left: 85px;
+    width: 90px;
+    height: 36px;
+    text-align: center;
+}
