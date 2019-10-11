@@ -37,7 +37,7 @@ public class ActivityServiceImpl implements IActivityService {
     @Transactional
     public ServerResponse createActivity(Activity activity) {
         try {
-            if (StringUtils.isBlank(activity.getEventName())
+            if (StringUtils.isBlank(activity.getActivityName())
                     || activity.getStartTime() == null
                     || activity.getEndTime() == null) {
                 return ServerResponse.createByErrorMessage("创建活动失败!非法参数！");

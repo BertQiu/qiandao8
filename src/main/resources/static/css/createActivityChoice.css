@@ -1,0 +1,47 @@
+.menu {
+    margin-top: 120px;
+}
+
+.choiceItem {
+    border-radius: 15px;
+    width: 520px;
+    height: 520px;
+    margin: 30px;
+}
+
+.once {
+    background-image: url(../images/choose-single.jpg);
+}
+
+.circle {
+    background-image: url(../images/choose-cycle.jpg);
+    filter: grayscale(100%);
+}
+
+.title {
+    margin-top: 265px;
+    text-align: center;
+}
+
+.desc {
+    margin-top: 35px;
+    text-align: center;
+}
+
+.choiceItem a {
+    display: block;
+    width: 185px;
+    line-height: 50px;
+    background-color: #2568a4;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 4px;
+    padding: 8px 20px;
+    margin: 34px auto 0;
+    text-decoration: none;
+    text-align: center;
+}
+
+.choiceItem a:hover {
+    background-color: #3c71c6
+}

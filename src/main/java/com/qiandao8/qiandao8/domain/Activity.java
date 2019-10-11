@@ -17,7 +17,7 @@ public class Activity {
     @Setter
     private Long id;
     @Setter
-    private String eventName;
+    private String activityName;
     @Setter
     private Long originatorId;
     @Setter

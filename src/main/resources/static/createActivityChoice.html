@@ -23,39 +23,11 @@
     <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <!--自定义-->
     <link rel="stylesheet" href="css/myNavBar.css">
+    <script src="js/isLogin.js"></script>
+    <link rel="stylesheet" href="css/createActivityChoice.css">
     <script src="js/getLoginStatus.js"></script>
 
-    <style>
-        .menu {
-            margin-top: 120px;
-        }
 
-        .choiceItem {
-            border-radius: 15px;
-            width: 500px;
-            height: 500px;
-            margin: 30px;
-        }
-
-        .once {
-            background-image: url(images/choose-single.jpg);
-        }
-
-        .circle {
-            background-image: url(images/choose-cycle.jpg);
-            filter: grayscale(100%);
-        }
-
-        .title {
-            margin-top: 265px;
-            text-align: center;
-        }
-
-        .desc {
-            margin-top: 35px;
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -74,7 +46,7 @@
             <ul class="nav navbar-nav navItem">
                 <li><a href="index.html">首页</a></li>
                 <li class="active"><a href="createActivityChoice.html">创建活动</a></li>
-                <li><a href="#contact">我创建的</a></li>
+                <li><a href="createActivity.html">我创建的</a></li>
                 <li><a href="#contact">我参与的</a></li>
                 <li><a href="#contact">使用帮助</a></li>
             </ul>
@@ -89,11 +61,12 @@
         <div class="col-sm-12 col-md-6 choiceItem once">
             <h2 class="title">单次活动</h2>
             <p class="desc">活动只进行一次</p>
-            <!--<button class="btn btn-lg btn-primary btn-block" type="button">立即</button>-->
+            <a href="">立即创建</a>
         </div>
         <div class="col-sm-12 col-md-6 choiceItem circle">
             <h2 class="title">周期活动</h2>
             <p class="desc">开发中...</p>
+            <a href="#" >尽情期待</a>
         </div>
     </div>
 </div>

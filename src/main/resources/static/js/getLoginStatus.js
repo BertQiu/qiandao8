@@ -6,7 +6,7 @@ $.ajax({
         if (result.status === 0) {
             $("#userInfo").append(
                 "<li><a href=\"#about\">"+result.data.username+"</a></li>\n" +
-                "<li><a href=\"/logout.do\">注销</a></li>"
+                "<li><a onclick='window.location.href=\"/logout.do\"'>注销</a></li>"
             )
         }else if (result.status === 1) {
             $("#userInfo").append(
