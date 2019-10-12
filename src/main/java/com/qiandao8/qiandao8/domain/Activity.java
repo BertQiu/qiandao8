@@ -92,6 +92,9 @@ public class Activity {
      * @param str
      */
     public void setBasicComponents(String str) {
+        if (str.equals("")) {
+            return;
+        }
         String[] textObj = str.split(BasicComponent.OBJECT_SEPARATOR);
         for (String obj : textObj) {
             BasicComponent bc = new BasicComponent();
@@ -115,6 +118,9 @@ public class Activity {
      * @param str
      */
     public void setListComponents(String str) {
+        if (str.equals("")) {
+            return;
+        }
         String[] objs = str.split(ListComponent.OBJECT_SEPARATOR);
         for (String obj : objs) {
             String[] title_opts = obj.split(ListComponent.TITLE_OPTS_SEPARATOR);

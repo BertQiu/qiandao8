@@ -1,0 +1,117 @@
+body {
+    background-color: #f0f0f0;
+}
+
+.red {
+    color: red;
+}
+
+.main {
+    width: 1585px;
+    background-color: #ffffff;
+
+    margin: 80px auto 20px;
+    border: 1px solid #d7d7d7;
+}
+
+.main > .header {
+    height: 50px;
+    background-color: #ffffff;
+    line-height: 50px;
+    padding-left: 15px;
+    border-bottom: 1px solid #e7e7eb;
+}
+
+.content {
+    padding-top: 50px;
+    font: 18px "Microsoft YaHei ";
+}
+
+.content .allInfo {
+    width: 1020px;
+    border: 1px solid #e7e7eb;
+    padding-top: 10px;
+}
+
+.content label {
+    margin-right: 50px;
+}
+
+.content input {
+    height: 40px;
+}
+
+.content .selectPanel {
+    width: 1000px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e7e7eb;
+}
+
+.content .selectPanel .createdItems {
+    font: 16px "Microsoft YaHei UI Light";
+}
+
+.content .selectPanel .createdItems .basicCreatedItem {
+    width: 1000px;
+    display: inline-block;
+    padding-bottom: 6px;
+    margin-bottom: 4px;
+    margin-top: 2px;
+}
+
+.content .selectPanel .createdItems .listCreatedItem {
+    width: 1000px;
+    display: inline-block;
+    padding-bottom: 6px;
+    margin-bottom: 4px;
+    margin-top: 2px;
+}
+
+.content .selectPanel .createdItems label {
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 12px;
+}
+
+.content .selectPanel .createdItems input {
+    display: inline-block;
+    width: 200px;
+    height: 32px;
+    margin-right: 20px;
+}
+
+.content .basicItems {
+    padding-top: 20px;
+    border-bottom: 1px solid #e7e7eb;
+    width: 1000px;
+    padding-bottom: 20px;
+}
+
+.content .basicItems p {
+    font-size: 16px;
+}
+
+.content .choiceBtn {
+    width: 200px;
+    margin: 3px 20px 5px 10px;
+}
+
+.content .listItems {
+    padding-top: 20px;
+    width: 1000px;
+    padding-bottom: 20px;
+}
+
+.content .ml15 {
+    margin-left: -19px;
+}
+
+.content .listItems p {
+    font-size: 16px;
+}
+
+#submit {
+    width: 120px;
+    font-size: 16px;
+    margin: 30px auto 30px;
+}
