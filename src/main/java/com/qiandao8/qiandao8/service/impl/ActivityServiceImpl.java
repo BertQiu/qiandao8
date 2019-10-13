@@ -7,6 +7,7 @@ import com.github.pagehelper.PageInfo;
 import com.qiandao8.qiandao8.common.ServerResponse;
 import com.qiandao8.qiandao8.common.SessionContext;
 import com.qiandao8.qiandao8.domain.Activity;
+import com.qiandao8.qiandao8.domain.UserInfo;
 import com.qiandao8.qiandao8.mapper.ActivityMapper;
 import com.qiandao8.qiandao8.qo.ActivityQueryObject;
 import com.qiandao8.qiandao8.service.IActivityService;
@@ -69,18 +70,32 @@ public class ActivityServiceImpl implements IActivityService {
 
     @Override
     public ServerResponse getParticipantNumbers(Long id) {
-        return ServerResponse.createBySuccess(activityMapper.getParticipantsNum(id));
+        // TODO 暂时没做权限检查：因为单纯返回活动签到人数的数据，不涉及到其他敏感信息
+        Integer participantsNum = activityMapper.getParticipantsNum(id);
+        if (participantsNum == null) {
+            return ServerResponse.createByError();
+        }
+        return ServerResponse.createBySuccess(participantsNum);
     }
 
     @Override
     public ServerResponse getActivity(Long aid) {
+        UserInfo currentUser = SessionContext.getCurrentUser();
         // 权限检查
-        if (SessionContext.getCurrentUser() == null && SessionContext.getEnableAttendActivityPermission() == null) {
+        if (currentUser == null && SessionContext.getEnableAttendActivityPermission() == null) {
             return ServerResponse.createByErrorMessage("没有足够的权限");
         }
-
         updateActivitiesStatus();
-        return ServerResponse.createBySuccess(activityMapper.selectByPrimaryKey(aid));
+
+        Activity activity = activityMapper.selectByPrimaryKey(aid);
+        if (activity == null) {
+            return ServerResponse.createByErrorMessage("未查询到对应活动！");
+        }
+        // 判断当前登录用户是否有权限查询他
+        if (currentUser != null && !activity.getOriginatorId().equals(currentUser.getId())) {
+            return ServerResponse.createByErrorMessage("没有足够的权限");
+        }
+        return ServerResponse.createBySuccess(activity);
     }
 
     @Override
@@ -89,13 +104,18 @@ public class ActivityServiceImpl implements IActivityService {
         if (SessionContext.getCurrentUser() == null && SessionContext.getEnableAttendActivityPermission() == null) {
             return ServerResponse.createByErrorMessage("没有足够的权限");
         }
-
         updateActivitiesStatus();
+
         Activity nearestActivity = SessionContext.getNearestActivity();
         if (nearestActivity == null) {
             return ServerResponse.createByErrorMessage("查询失败！");
         }
-        return ServerResponse.createBySuccess(activityMapper.selectByPrimaryKey(nearestActivity.getId()));
+
+        Activity activity = activityMapper.selectByPrimaryKey(nearestActivity.getId());
+        if (activity == null) {
+            return ServerResponse.createByErrorMessage("未查询到对应活动！");
+        }
+        return ServerResponse.createBySuccess(activity);
     }
 
     @Override

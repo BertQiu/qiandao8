@@ -54,12 +54,23 @@
         id, activity_name, originator, originator_id, start_time, end_time, status, type, participants_nums,
         create_time, update_time, basic_selc, list_selc
     </sql>
+    <sql id="min_column">
+        id, activity_name, originator,  start_time, end_time, status, basic_selc, list_selc
+    </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap">
         select
         <include refid="full_column"/>
         from `activity`
         where id = #{id}
+        and status = 0
     </select>
+    <select id="selectEnableActivityByPk" resultMap="BaseResultMap">
+        select
+        <include refid="full_column"/>
+        from `activity`
+        where id = #{id}
+    </select>
+
     <select id="selectAll" resultMap="BaseResultMap">
         select
         <include refid="full_column"/>
@@ -70,7 +81,7 @@
         set participants_nums = #{participantsNum}
         where id = #{id}
     </update>
-    <select id="getParticipantsNum" resultType="java.lang.Integer">
+    <select id="getParticipantsNum" resultType="integer">
         select participants_nums
         from activity
         where id = #{id}
@@ -114,6 +125,6 @@
         select count(id)
         from activity
         where id = #{id}
-              and status = 0
+        and status = 0
     </select>
 </mapper>

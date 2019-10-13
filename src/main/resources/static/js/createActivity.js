@@ -64,6 +64,7 @@ function addItem(ev,type,title) {
         )
     }
 }
+
 $(function () {
     $("#InfoForm").validate({
         rules: {
@@ -85,8 +86,8 @@ $(function () {
 
     $("#submit").click(function () {
         var componentUtil = new ComponentUtil();
-        var basicComponentsStr = componentUtil.getBasicComponentsString()
-        var listComponentsStr = componentUtil.getListComponentsString()
+        var basicComponentsStr = componentUtil.getBasicComponentsString();
+        var listComponentsStr = componentUtil.getListComponentsString();
         $.ajax({
             type: "post",
             url: "/activity/createOneActivity.do",
@@ -95,19 +96,23 @@ $(function () {
                 originator: $("input[name=originator]").val(),
                 startTime: dateFormat(new Date()),
                 endTime: dateFormat($("input[name=endTime]").val()),
-                basicComponents:basicComponentsStr ,
+                basicComponents: basicComponentsStr,
                 listComponents: listComponentsStr,
             },
             dataType: "json",
             beforeSend: function () {
-                if (basicComponentsStr === "" && listComponentsStr=== "") {
+                if (basicComponentsStr === "" && listComponentsStr === "") {
                     alert("请至少选择一项签到信息！");
                     return false;
                 }
                 return $("#InfoForm").valid();
             },
             success: function (result) {
-                console.log(result);
+                if (result.status === 0) {
+                    window.location.href="signinBoard.html"
+                } else if (result.status === 1) {
+                    alert("提交失败！" + result.msg);
+                }
             }
         });
     });

@@ -13,6 +13,8 @@ public interface ActivityMapper {
 
     Activity selectByPrimaryKey(Long id);
 
+    Activity selectEnableActivityByPk(Long id);
+
     List<Activity> selectAll();
 
     int updateByPrimaryKey(Activity record);
@@ -21,7 +23,7 @@ public interface ActivityMapper {
 
     int updateParticipantsNumByPK(@Param("id") Long id, @Param("participantsNum") Integer participantsNum);
 
-    int getParticipantsNum(Long id);
+    Integer getParticipantsNum(Long id);
 
     List<Activity> listActivitiesByQueryObj(ActivityQueryObject queryObject);
 

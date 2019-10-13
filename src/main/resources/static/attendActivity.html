@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>登录 签到吧 --基于web的签到平台</title>
+    <title>活动签到 签到吧 --基于web的签到平台</title>
 
     <!-- Bootstrap -->
     <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
@@ -24,40 +24,42 @@
 
     <!--自定义部分-->
     <script src="js/jquery-validate.js"></script>
-    <link rel="stylesheet" href="css/login.css">
-    <script src="js/login.js"></script>
 
+    <script>
+        var activityObj;
+        var basicComponent;
+        var listComponent;
+        $.ajax({
+            type: "get",
+            url: "/attend/getAttendActivityInfo.do",
+            dataType: "json",
+            success: function (result) {
+                if (!result.success) {
+                    window.location.href = "/error/errorPage.html";
+                }
+                activityObj = result.data;
+                basicComponent = JSON.parse(activityObj.basicSelc);
+                listComponent = JSON.parse(activityObj.listSelc);
+            },
+            async: false
+        });
+    </script>
+
+    <script>
+        $(function () {
+            console.log(activityObj);
+            console.log(basicComponent);
+            console.log(listComponent);
+            console.log("-----------");
+            $.each(basicComponent, function (i, v) {
+                v.content = 123123;
+            });
+            console.log(basicComponent);
+        })
+    </script>
 
 </head>
 <body>
-<div class="container">
-    <form class="form-signin" id="loginForm">
-        <h2 class="form-signin-heading">用户登录</h2>
-        <label for="inputUsername" class="sr-only">Email address</label>
-        <input type="text" id="inputUsername" class="form-control" placeholder="账号" name="username"  autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="密码" name="password">
-        <div class="checkbox">
-            <label class="options">
-                <input type="checkbox" value="remember-me"> 记住我
-                <a href="" id="forgetPwd">忘记密码?</a>
-            </label>
-        </div>
-        <button id="login" class="btn btn-lg btn-primary btn-block" type="button">登录</button>
-    </form>
-
-    <div class="registerDiv">
-        <p>还没账号？<a href="">立即注册！</a></p>
-    </div>
-
-    <footer>
-        <p>&copy; 2019 签到吧 基于web的签到系统</p>
-    </footer>
-</div>
-
-
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 
 </body>
 

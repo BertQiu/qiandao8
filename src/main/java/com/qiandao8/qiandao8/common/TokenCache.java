@@ -28,7 +28,7 @@ public class TokenCache {
     /**
      * 缓存失效时间 单位（秒）
      */
-    private static int EXPIRE_DURATION =10;
+    private static int EXPIRE_DURATION =30;
 
     private static Logger logger = LoggerFactory.getLogger(TokenCache.class);
 

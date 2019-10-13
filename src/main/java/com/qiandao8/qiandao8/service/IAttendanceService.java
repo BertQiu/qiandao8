@@ -11,7 +11,9 @@ public interface IAttendanceService {
 
     ServerResponse getCheckInUrl(Long aid);
 
-    ServerResponse getAttendAccess(Long aid, String token);
+    boolean getAttendAccess(Long aid, String token);
 
     ServerResponse attendActivity(String basicSelcInfo, String listSelcInfo,String ipAddr);
+
+    ServerResponse getAttendActivityInfo();
 }

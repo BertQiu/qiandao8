@@ -28,8 +28,14 @@ public class Activity {
     @Setter
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date endTime;
+    /**
+     * 活动状态
+     */
     @Setter
     private Integer status;
+    /**
+     * 活动类型：单词活动，周期活动
+     */
     @Setter
     private Integer type;
     @Setter

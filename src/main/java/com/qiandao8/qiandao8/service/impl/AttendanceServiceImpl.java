@@ -3,6 +3,7 @@ package com.qiandao8.qiandao8.service.impl;
 import com.qiandao8.qiandao8.common.ServerResponse;
 import com.qiandao8.qiandao8.common.SessionContext;
 import com.qiandao8.qiandao8.common.TokenCache;
+import com.qiandao8.qiandao8.domain.Activity;
 import com.qiandao8.qiandao8.domain.Attendance;
 import com.qiandao8.qiandao8.mapper.ActivityMapper;
 import com.qiandao8.qiandao8.mapper.AttendanceMapper;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.websocket.Session;
 import java.util.Date;
 import java.util.UUID;
 
@@ -43,14 +45,14 @@ public class AttendanceServiceImpl implements IAttendanceService {
     }
 
     @Override
-    public ServerResponse getAttendAccess(Long aid, String token) {
+    public boolean getAttendAccess(Long aid, String token) {
         // 判断传来的token是否在缓存中能查询到对应的活动
         if (StringUtils.equals(TokenCache.getValue(token), aid.toString())) {
             // 给用户存一个session表示他可以对哪个活动进行下一步签到操作了
             SessionContext.putEnableAttendActivityPermission(aid);
-            return ServerResponse.createBySuccess();
+            return true;
         }
-        return ServerResponse.createByErrorMessage("请重试");
+        return false;
     }
 
     @Override
@@ -72,13 +74,23 @@ public class AttendanceServiceImpl implements IAttendanceService {
         if (attendanceMapper.insert(attendance) == 0) {
             return ServerResponse.createByErrorMessage("插入失败");
         }
-
         // 对原项目签到人数进行更新
         activityMapper.increaseParticipantsNumByPK(aid);
-
-
         SessionContext.removeEnableAttendActivityPermission();
 
         return ServerResponse.createBySuccessMessage("签到成功！");
+    }
+
+    @Override
+    public ServerResponse getAttendActivityInfo() {
+        Long aid = SessionContext.getEnableAttendActivityPermission();
+        if (aid == null) {
+            return ServerResponse.createByError();
+        }
+        Activity activity = activityMapper.selectEnableActivityByPk(aid);
+        if (activity == null) {
+            return ServerResponse.createByError();
+        }
+        return ServerResponse.createBySuccess(activity);
     }
 }
