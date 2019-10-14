@@ -22,4 +22,6 @@ public interface IActivityService {
     ServerResponse listActivities(ActivityQueryObject queryObject);
 
     void updateActivitiesStatus();
+
+    ServerResponse deleteActivities(Long aid);
 }

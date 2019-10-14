@@ -32,4 +32,6 @@ public interface ActivityMapper {
     int updateActivitiesStatus(@Param("id") Long id,@Param("status") Integer status);
 
     int getOngoingActivity(Long id);
+
+    int deleteActivity(@Param("id")Long id,@Param("originatorId")Long originatorId);
 }

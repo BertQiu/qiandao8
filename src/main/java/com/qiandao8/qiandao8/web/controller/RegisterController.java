@@ -20,7 +20,7 @@ public class RegisterController {
     @Autowired
     private IUserInfoService userInfoService;
 
-    @RequestMapping(value = "register.do" ,method = RequestMethod.POST)
+    @RequestMapping(value = "register.do",method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse register(UserInfo userInfo) {
         return userInfoService.register(userInfo);

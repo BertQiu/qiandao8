@@ -6,6 +6,10 @@ body {
     color: red;
 }
 
+.shadow {
+    box-shadow: 0 0 8px #c9c5c8;
+}
+
 .main {
     width: 1585px;
     background-color: #ffffff;

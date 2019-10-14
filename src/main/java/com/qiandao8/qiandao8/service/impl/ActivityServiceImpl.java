@@ -140,4 +140,14 @@ public class ActivityServiceImpl implements IActivityService {
         }
     }
 
+    @Override
+    @Transactional
+    public ServerResponse deleteActivities(Long aid) {
+        int effectCount = activityMapper.deleteActivity(aid, SessionContext.getCurrentUser().getId());
+        if (effectCount > 0) {
+            return ServerResponse.createBySuccessMessage("操作成功！");
+        }
+        return ServerResponse.createByErrorMessage("操作失败！");
+    }
+
 }

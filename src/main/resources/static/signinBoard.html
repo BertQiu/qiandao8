@@ -42,33 +42,32 @@
             justify-content: space-between;
         }
 
-        .board .left {
+        .board #left {
             width: 560px;
             height: 760px;
             background-color: #cccccc;
         }
 
-        .board .left .title {
+        .board #left .title {
             width: 100%;
             height: 180px;
             padding-top: 60px;
         }
 
-        .board .left .title p {
+        .board #left .title p {
             text-align: center;
             font-size: 36px;
         }
 
-        .board .left .qrCode {
-            width: 100%;
-            height: 540px;
-        }
-
-        .board .left .qrCode {
+        .board #left .qrCode {
             width: 512px;
             height: 512px;
-            background-color: white;
+            /*background-color: white;*/
             margin: 0 auto;
+        }
+
+        .board #left .img {
+            text-align: center;
         }
 
         .board .right {
@@ -124,9 +123,6 @@
     </style>
 
     <script>
-
-
-
         $(function () {
             var refreshTime = 5000;//刷新时间
             var aid = getUrlParam("aid");
@@ -144,26 +140,45 @@
                 url: actInfoUrl,
                 dataType: "json",
                 success: function (result) {
-                    if (result.status === 0) {
+                    if (!result.success) {
+                        alert("查询活动失败！" + result.msg);
+                        window.location.href = "index.html";
+                    }
+                    $("#actTitle").text(result.data.activityName);
+                    $("#createTime").text(dateFormat(result.data.createTime));
+                    $("#endTime").text(dateFormat(result.data.endTime));
+                    if (result.data.status === 0) {
                         aid = result.data.id;//现在就有了id
 
-                        $("#actTitle").text(result.data.activityName);
-                        $("#createTime").text(dateFormat(result.data.createTime));
-                        $("#endTime").text(dateFormat(result.data.endTime));
-                    } else if (result.status === 1) {
-                        alert("查询活动失败！" + result.msg);
-                        // 可能需要做个跳转
-                        window.location.href = "index.html";
+                        $("#left").append(
+                            "<div class=\"title\">\n" +
+                            "<p>请扫描二维码完成签到</p>\n" +
+                            "</div>\n" +
+                            "<div class=\"qrCode\">\n" +
+                            "<div class=\"img\"></div>\n" +
+                            "<a id=\"testA\" href=\"\" style=\"text-align: center;font-size: 24px;\"></a>\n" +
+                            "</div>\n"
+                        )
+                    } else if (result.data.status === 1) {
+                        // 活动已经结束
+                        $("#left").append(
+                            "<div class=\"title\">\n" +
+                            "<p>活动已结束</p>\n" +
+                            "</div>\n" +
+                            "<div class=\"img\">\n" +
+                            "<img src=\"images/image-over.png\" alt=\"\">\n" +
+                            "</div>"
+                        )
                     }
                 },
                 async: false
             });
 
             // 定义一些需要用到的函数
-             function getJoinNumFun() {
-                 if (aid == null) {
-                     return;
-                 }
+            function getJoinNumFun() {
+                if (aid == null) {
+                    return;
+                }
                 $.ajax({
                     type: "get",
                     url: "/activity/getParticipantNumbers.do?aid=" + aid,
@@ -185,6 +200,7 @@
                     }
                 });
             };
+
             function getQRcodeFun() {
                 if (aid == null) {
                     return;
@@ -195,7 +211,7 @@
                     dataType: "json",
                     success: function (result) {
                         if (result.success) {
-                            var location = new Const().ProjectDomain+"attend/getAttendAccess.do?aid="+aid+"&token="+result.data;
+                            var location = new Const().ProjectDomain + "attend/getAttendAccess.do?aid=" + aid + "&token=" + result.data;
                             $("#testA").attr("href", location);
                             $("#testA").text(location);
                         }
@@ -235,7 +251,6 @@
                 <li><a href="index.html">首页</a></li>
                 <li><a href="createActivityChoice.html">创建活动</a></li>
                 <li><a href="createActivity.html">我创建的</a></li>
-                <li><a href="#contact">我参与的</a></li>
                 <li><a href="#contact">使用帮助</a></li>
             </ul>
             <ul id="userInfo" class="nav navbar-nav navbar-right hidden-sm"></ul>
@@ -244,16 +259,7 @@
 </nav>
 
 <div class="board">
-    <div class="left">
-        <div class="title">
-            <p>请扫描二维码完成签到</p>
-        </div>
-        <div class="qrCode">
-            <div class="img"></div>
-            <a id="testA" href="" style="text-align: center;font-size: 24px;"></a>
-        </div>
-    </div>
-
+    <div id="left"></div>
     <div class="right">
         <div class="info">
             <p id="actTitle">活动名称</p>

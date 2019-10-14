@@ -20,8 +20,8 @@ public class MD5Utils {
     }
 
     public static String getEncodingMD5(String src) {
-        System.out.println(src+SALT);
-        return enCrypt(src + SALT);
+//        return enCrypt(src + SALT);
+        return src;//不使用加密嘿嘿嘿
     }
 
 
@@ -45,13 +45,4 @@ public class MD5Utils {
         }
         return null;
     }
-
-//    private static String converMD5(String instr) {
-//        char[] a = instr.toCharArray();
-//        for (int i = 0; i < a.length; i++) {
-//            a[i] = (char) (a[i] ^ 't');
-//        }
-//        return new String(a);
-//    }
-
 }

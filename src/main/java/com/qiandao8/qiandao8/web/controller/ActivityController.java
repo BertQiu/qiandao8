@@ -65,5 +65,12 @@ public class ActivityController {
         return activityService.listActivities(queryObject);
     }
 
+    @RequestMapping(value = "deleteActivities.do", method = RequestMethod.GET)
+    @ResponseBody
+    @RequireLogin
+    public ServerResponse deleteActivities(Long aid) {
+        return activityService.deleteActivities(aid);
+    }
+
 
 }

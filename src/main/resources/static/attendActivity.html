@@ -24,134 +24,10 @@
 
     <!--自定义部分-->
     <script src="js/jquery-validate.js"></script>
+    <link rel="stylesheet" href="css/attendActivity.css">
+    <script src="js/attendActivity1.js"></script>
+    <script src="js/attendActivity2.js"></script>
 
-    <script>
-        var activityObj;
-        var basicComponent;
-        var listComponent;
-        $.ajax({
-            type: "get",
-            url: "/attend/getAttendActivityInfo.do",
-            dataType: "json",
-            success: function (result) {
-                if (!result.success) {
-                    window.location.href = "/error/errorPage.html";
-                }
-                activityObj = result.data;
-                basicComponent = JSON.parse(activityObj.basicSelc);
-                listComponent = JSON.parse(activityObj.listSelc);
-            },
-            async: false
-        });
-    </script>
-
-    <script>
-        $(function () {
-            //dev
-            console.log(activityObj);
-            //dev
-            var basicComponentContainer = $("#basicComponentContainer");
-            var listComponentContainer = $("#listComponentContainer");
-            // 根据 basicComponent，listComponent对象生成此次表单
-            // 基本组件id:bi_+${i} 列表组件id:ls_+${i}
-            $.each(basicComponent, function (i, v) {
-                var _title = v.title;
-                var _remark = v.remarks===undefined?"":v.remarks;
-                basicComponentContainer.append(
-                    "<div class=\"form-group\">\n" +
-                    "<label for=\"bi_"+i+"\" class=\"col-sm-2 control-label\">"+_title+"</label>\n" +
-                    "<div class=\"col-xs-12 col-sm-8 col-md-6 col-lg-4\">\n" +
-                    " <input type=\"text\" class=\"form-control\" id=\"bi_"+i+"\" placeholder=\""+_remark+"\">\n" +
-                    "</div>\n" +
-                    "</div> "
-                )
-            });
-            $.each(listComponent, function (i, v) {
-                var _title = v.title;
-                var _options = v.options;
-                console.log(_title);
-                console.log(_options);
-                listComponentContainer.append(
-                    "<div class=\"form-group\">\n" +
-                    "<label for=\"ls_" + i + "\" class=\"col-sm-2 control-label\">" + _title + "</label>\n" +
-                    "<div class=\"col-xs-12 col-sm-8 col-md-6 col-lg-4\">\n" +
-                    "<select name=\"\" id=\"ls_" + i + "\" class=\"form-control\">\n" +
-                    "</select>\n" +
-                    "</div>\n" +
-                    "</div>"
-                );
-                var _selectEl = $("#ls_" + i);
-                for (var j = 0; j < _options.length; j++) {
-                    _selectEl.append(
-                        "<option value=\"" + _options[j] + "\">" + _options[j] + "</option>\n"
-                    );
-                } 
-            });
-
-
-
-
-
-
-
-
-
-
-
-            $("#submit").click(function () {
-                console.log($("#ls_title").val());
-            })
-        })
-    </script>
-
-
-    <style>
-        body {
-            padding-top: 40px;
-            padding-bottom: 40px;
-            background-color: #f8f8f8;
-        }
-
-        .formContainer{
-            height: 900px;
-            background: white;
-            margin: 15px auto 35px;
-        }
-
-        .shadow{ box-shadow: 0 0 8px #c9c5c8;}
-
-        .info{
-            width: 100%;
-            height: 140px;
-            text-align: center;
-            padding-top: 38px;
-            color: #666666;
-        }
-        .info #title {
-            font-size: 38px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color:#ec971f;
-        }
-        .info .detail p{
-            display: inline-block;
-            margin-right: 24px;
-        }
-
-        .myForm{
-            margin: 50px;
-        }
-
-        #submit{
-            width: 140px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        footer {
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
 <!--<div class="page-header">-->
@@ -172,11 +48,23 @@
             </div>
             <div id="listComponentContainer">
             </div>
+            <!--项目二期再做 使用cookie缓存一些信息-->
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> 保存签到信息
+                        </label>
+                    </div>
+                </div>
+            </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-xs-12 col-sm-8 col-md-6 col-lg-4">
                     <button id="submit" type="button" class="btn btn btn-warning">提交</button>
                 </div>
             </div>
+
+
         </form>
 
     </div>

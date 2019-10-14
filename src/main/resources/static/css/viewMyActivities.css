@@ -1,0 +1,112 @@
+body {
+    background-color: #eeeeee;
+}
+
+.shadow {
+    box-shadow: 0 0 8px #c9c5c8;
+}
+
+.orange {
+    color: orange;
+}
+
+.blue {
+    color: #24a1d8;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: orange;
+}
+
+.activity-wrapper {
+    width: 1400px;
+    background-color: #ffffff;
+
+    margin: 80px auto 20px;
+    border: 1px solid #d7d7d7;
+    font-size: 18px;
+}
+
+.myNav {
+    width: 120px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.myNav > a {
+    color: black;
+}
+
+.activity-wrapper .listTitle {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.activity-wrapper .listTitle p {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 28px;
+}
+
+.activity-wrapper .listTitle a {
+    display: inline-block;
+    background-color: orange;
+    color: white;
+    width: 180px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 20px;
+    margin-right: 30px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.table {
+}
+
+.table > thead > tr > td {
+    font-weight: bold;
+}
+
+.table > thead > tr > td {
+    padding-left: 28px;
+    height: 34px;
+    line-height: 34px;
+}
+
+.table > tbody > tr > td {
+    padding-left: 28px;
+    height: 43px;
+    line-height: 43px;
+}
+
+.table > tbody > tr > td > a {
+    color: #ea853c;
+}
+
+.countAll {
+    font-size: 16px;
+}
+
+.empty {
+    width: 100%;
+    height: 300px;
+    margin: 0 auto;
+    text-align: center;
+}
+.empty p {
+    margin-top: 20px;
+    color: #bfbfbf;
+}
+.empty a{
+    text-decoration: none;
+    color: #337ab7;
+}
+.empty a:hover{
+    text-decoration: none;
+    color: #6364b7;
+}

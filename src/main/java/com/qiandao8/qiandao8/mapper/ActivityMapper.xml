@@ -2,17 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qiandao8.qiandao8.mapper.ActivityMapper">
     <resultMap id="BaseResultMap" type="com.qiandao8.qiandao8.domain.Activity">
-        <id column="id"  property="id"/>
-        <result column="activity_name"  property="activityName"/>
-        <result column="originator"  property="originator"/>
-        <result column="originator_id"  property="originatorId"/>
-        <result column="start_time"  property="startTime"/>
-        <result column="end_time"  property="endTime"/>
+        <id column="id" property="id"/>
+        <result column="activity_name" property="activityName"/>
+        <result column="originator" property="originator"/>
+        <result column="originator_id" property="originatorId"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
         <result column="status" property="status"/>
-        <result column="type"  property="type"/>
+        <result column="type" property="type"/>
         <result column="participants_nums" property="participantsNums"/>
-        <result column="create_time"  property="createTime"/>
-        <result column="update_time"  property="updateTime"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
         <result column="basic_selc" property="basicSelc"/>
         <result column="list_selc" property="listSelc"/>
     </resultMap>
@@ -23,19 +23,19 @@
                                 participants_nums, create_time, update_time,
                                 basic_selc, list_selc)
         values (#{activityName}, #{originator}, #{originatorId}, #{startTime},
-                              #{endTime}, #{status}, #{type},
-                              #{participantsNums}, now(), now(),
-                              #{basicSelc}, #{listSelc})
+                                 #{endTime}, #{status}, #{type},
+                                 #{participantsNums}, now(), now(),
+                                 #{basicSelc}, #{listSelc})
     </insert>
     <update id="increaseParticipantsNumByPK">
         update activity
-        set participants_nums = participants_nums+1
+        set participants_nums = participants_nums + 1
         where id = #{id}
     </update>
-    
+
     <update id="updateByPrimaryKey" parameterType="com.qiandao8.qiandao8.domain.Activity">
         update `activity`
-        set activity_name        = #{activityName},
+        set activity_name     = #{activityName},
             originator        = #{originator},
             start_time        = #{startTime},
             end_time          = #{endTime},
@@ -55,14 +55,13 @@
         create_time, update_time, basic_selc, list_selc
     </sql>
     <sql id="min_column">
-        id, activity_name, originator,  start_time, end_time, status, basic_selc, list_selc
+        id, activity_name, originator, start_time, end_time, status, basic_selc, list_selc
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap">
         select
         <include refid="full_column"/>
         from `activity`
         where id = #{id}
-        and status = 0
     </select>
     <select id="selectEnableActivityByPk" resultMap="BaseResultMap">
         select
@@ -92,6 +91,9 @@
         from activity
         <where>
             originator_id = #{originatorId}
+            #            删除的查询不到
+            and status &lt; 2
+
             <if test="activityName!=null">
                 and activity_name = #{activityName}
             </if>
@@ -118,13 +120,20 @@
     <select id="listFinishedActivities" resultType="java.lang.Long">
         select id
         from activity
-        where end_time &lt; #{endTime}
+        where status = 0
+              and end_time &lt; #{endTime}
     </select>
 
     <select id="getOngoingActivity" resultType="int">
         select count(id)
         from activity
         where id = #{id}
-        and status = 0
+              and status = 0
     </select>
+    <update id="deleteActivity">
+        update activity
+        set status = 2
+        where id = #{id}
+              and originator_id = #{originatorId}
+    </update>
 </mapper>

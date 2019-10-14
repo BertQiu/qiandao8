@@ -18,7 +18,7 @@ public class ActivityQueryObject extends AbstractQueryObject {
     /**
      * 高级查询条件:活动名称
      */
-    private String eventName;
+    private String activityName;
 
     /**
      * 高级查询条件:用户的发起者id
