@@ -7,8 +7,8 @@ import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 @Getter
@@ -131,62 +131,9 @@ public class Activity {
         for (String obj : objs) {
             String[] title_opts = obj.split(ListComponent.TITLE_OPTS_SEPARATOR);
             String[] opts = title_opts[1].split(ListComponent.OPTION_SEPARATOR);
-            HashMap<String, Boolean> options = new HashMap<>();
-            for (String opt : opts) {
-                options.put(opt, false);
-            }
+            List<String> options = new ArrayList<>(Arrays.asList(opts));
             this.listComponents.add(new ListComponent(title_opts[0], options));
         }
 
     }
 }
-// * 若对象有- 则表示 title-remarks!content
-//      * 被选中的option后有!
-//    public void setBasicComponents(String str) {
-//        String[] textObj = str.split(",");
-//        for (String obj : textObj) {
-//            BasicComponent bc = new BasicComponent();
-//            // 存在内容
-//            if (obj.contains("!")) {
-//                String[] info_content = obj.split("!");
-//                bc.setContent(info_content[1]);
-//                //存在备注
-//                System.out.println(info_content[0] + "ifo222");
-//                if (info_content[0].contains("-")) {
-//                    String[] title_remarks = info_content[0].split("-");
-//                    bc.setTitle(title_remarks[0]);
-//                    bc.setRemarks(title_remarks[1]);
-//                } else {
-//                    bc.setTitle(info_content[0]);
-//                }
-//            } else {
-//                //不存在内容
-//                if (obj.contains("-")) {
-//                    String[] title_remarks = obj.split("-");
-//                    bc.setTitle(title_remarks[0]);
-//                    bc.setRemarks(title_remarks[1]);
-//                } else {
-//                    bc.setTitle(obj);
-//                }
-//            }
-//            this.basicComponents.add(bc);
-//        }
-//    }
-//
-//    public void setListComponents(String str) {
-//        String[] objs = str.split("-");
-//        for (String obj : objs) {
-//            String[] title_opts = obj.split(":");
-//            String[] opts = title_opts[1].split(",");
-//            HashMap<String, Boolean> options = new HashMap<>();
-//            for (String opt : opts) {
-//                if (opt.endsWith("!")) {
-//                    options.put(opt.substring(0, opt.length() - 1), true);
-//                } else {
-//                    options.put(opt, false);
-//                }
-//            }
-//            this.listComponents.add(new ListComponent(title_opts[0], options));
-//        }
-//
-//    }

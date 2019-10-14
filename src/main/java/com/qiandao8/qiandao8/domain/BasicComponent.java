@@ -14,8 +14,17 @@ import lombok.*;
 @ToString
 public class BasicComponent {
 
+    /**
+     * 文本组件的标题
+     */
     private String title;
+    /**
+     * 文本组件的备注（placeholder）
+     */
     private String remarks;
+    /**
+     * 用户所填入的内容
+     */
     private String content;
 
     public BasicComponent(String title) {
@@ -27,7 +36,6 @@ public class BasicComponent {
         this.content = content;
     }
 
-
     /**
      * 需要的字符串格式: 姓名-aaa,手机
      * 用 " , "分割每个对象
@@ -38,6 +46,5 @@ public class BasicComponent {
      * 用 " - "分割标题和备注
      */
     public static final String TITLE_REMARK_SEPARATOR = "-";
-
 
 }

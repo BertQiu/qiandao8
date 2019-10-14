@@ -108,9 +108,9 @@ $(function () {
                 return $("#InfoForm").valid();
             },
             success: function (result) {
-                if (result.status === 0) {
+                if (result.success) {
                     window.location.href="signinBoard.html"
-                } else if (result.status === 1) {
+                } else if (!result.success) {
                     alert("提交失败！" + result.msg);
                 }
             }

@@ -1,10 +1,9 @@
 package com.qiandao8.qiandao8.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * @author Bert Q
@@ -12,11 +11,20 @@ import java.util.Map;
  * Description TODO
  */
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 public class ListComponent {
+    /**
+     * 标题
+     */
     private String title;
-    private Map<String,Boolean> options ;
+    /**
+     * 被选择的哪项
+     */
+    private String selectedOption;
+    /**
+     * 下拉聊表选项
+     */
+    private List<String> options ;
 
     /**
      * 需要的字符串格式: 性别:男,女-年龄:20,30
@@ -34,4 +42,8 @@ public class ListComponent {
      */
     public static final String OPTION_SEPARATOR = ",";
 
+    public ListComponent(String title, List<String> options) {
+        this.title = title;
+        this.options = options;
+    }
 }

@@ -3,7 +3,6 @@ package com.qiandao8.qiandao8.web.controller;
 import com.qiandao8.qiandao8.common.ServerResponse;
 import com.qiandao8.qiandao8.service.IAttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,7 +44,7 @@ public class AttendanceController {
             if (isSuccess) {
                 response.sendRedirect("/attendActivity.html");
             } else {
-                response.sendRedirect("/error/errorPage.html");
+                response.sendRedirect("/error/disabled.html");
             }
         } catch (Exception e) {
             e.printStackTrace();

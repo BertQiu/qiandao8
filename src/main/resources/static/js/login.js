@@ -14,10 +14,10 @@ $(function () {
                 return $("#loginForm").valid();
             },
             success: function (result) {
-                if (result.status === 0) {
+                if (result.success) {
                     window.location.href = "/index.html";
                 }
-                if (result.status === 1) {
+                if (!result.success) {
                     alert('账户或密码错误');
                 }
             }
