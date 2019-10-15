@@ -1,4 +1,8 @@
 $(function () {
+    $("#title").text(activityObj.activityName);
+    $("#endTime").text(dateFormat(activityObj.endTime));
+    $("#originator").text(activityObj.originator);
+
     var basicComponentContainer = $("#basicComponentContainer");
     var listComponentContainer = $("#listComponentContainer");
     // 根据 basicComponent，listComponent对象生成此次表单

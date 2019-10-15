@@ -11,7 +11,7 @@ $.ajax({
         }else if (!result.success) {
             $("#userInfo").append(
                 "<li><a href=\"login.html\" >登录</a></li>\n" +
-                "<li><a href=\"/about/\" >注册</a></li>"
+                "<li><a href=\"register.html\" >注册</a></li>"
             )
         }
     }

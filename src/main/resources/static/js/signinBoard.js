@@ -1,5 +1,5 @@
 $(function () {
-    var refreshTime = 5000;//刷新时间
+    var refreshTime = 3000;//刷新时间
     var aid = getUrlParam("aid");
     var actInfoUrl;//请求活动信息的url地址
 
@@ -86,6 +86,7 @@ $(function () {
                 if (result.success) {
                     $("#qrcode").empty();
                     var location = new Const().ProjectDomain + "attend/getAttendAccess.do?aid=" + aid + "&token=" + result.data;
+                    console.log(location);
                     var qrcode = new QRCode(document.getElementById("qrcode"), {
                         width : 400,
                         height : 400

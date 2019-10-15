@@ -15,6 +15,7 @@
     <!--自定义部分-->
     <script src="js/jquery-validate.js"></script>
     <link rel="stylesheet" href="css/attendActivity.css">
+    <script src="js/util/DateUtils.js"></script>
     <script src="js/attendActivity1.js"></script>
     <script src="js/attendActivity2.js"></script>
 
@@ -23,10 +24,11 @@
 <div class="container">
     <div class="formContainer shadow col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
         <div class="info">
-            <div id="title">活动名称</div>
+            <div id="title">活动标题</div>
             <div class="detail">
-                <p >结束时间：<span id="endTime">2901-23-123 19:22:00</span></p>
-                <p >活动发起人：<span id="originator">张三</span>  </p>
+                <!--// TODO 移动端日期解析有问题，先不暴露出去-->
+                <!--<p >结束时间：<span id="endTime"></span></p>-->
+                <p >活动发起人：<span id="originator"></span>  </p>
             </div>
         </div>
         <hr>

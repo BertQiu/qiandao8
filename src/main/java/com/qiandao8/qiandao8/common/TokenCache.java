@@ -23,12 +23,12 @@ public class TokenCache {
     /**
      * 缓存最大容量
      */
-    private static int MAXIMUM_SIZE = 200;
+    private static int MAXIMUM_SIZE = 500;
 
     /**
      * 缓存失效时间 单位（秒）
      */
-    private static int EXPIRE_DURATION =30;
+    private static int EXPIRE_DURATION =5;
 
     private static Logger logger = LoggerFactory.getLogger(TokenCache.class);
 

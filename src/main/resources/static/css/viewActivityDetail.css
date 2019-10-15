@@ -25,6 +25,10 @@
 .headInfo p {
     display: inline-block;
 }
+.headInfo a {
+    color: #ea853c;
+    font-size: 18px;
+}
 
 .headInfo .right p {
     font-size: 18px;

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>注册 签到吧 --基于web的签到平台</title>
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <!--自定义-->
+    <script src="js/jquery-validate.js"></script>
+    <link rel="stylesheet" href="css/register.css">
+    <script src="js/register.js"></script>
+
+</head>
+
+<body>
+<div class="page-header">
+    <a href="index.html">
+        <h1>签到吧
+            <small>--基于web的签到平台</small>
+        </h1>
+    </a>
+</div>
+<div class="myContainer">
+    <div class="container ">
+        <form class="form-signin" id="loginForm">
+            <h2 class="form-signin-heading">新用户注册</h2>
+            <p><span class="red">*</span>用户名</p>
+            <input type="text" id="inputUsername" class="form-control" placeholder="用户名" name="username" autofocus>
+            <p><span class="red">*</span>密码</p>
+            <input type="password" id="inputPassword" class="form-control" placeholder="密码" name="password">
+            <p><span class="red">*</span>确认密码</p>
+            <input type="password" id="inputPassword2" class="form-control" placeholder="重复密码" name="password2">
+            <p><span class="red">*</span>昵称</p>
+            <input type="text" id="inputNickname" class="form-control" placeholder="昵称" name="nickName">
+            <button id="login" class="btn btn-lg btn-warning btn-block" type="button">立即注册！</button>
+        </form>
+        <footer>
+            <p>&copy; 2019 签到吧 基于web的签到系统</p>
+        </footer>
+    </div>
+
+</div>
+
+
+
+</body>
+</html>
