@@ -89,7 +89,7 @@ function renderTable() {
                 listItem = JSON.parse(v.listSelcInfo);
             }catch(e){
             }
-            if (basicItem == "" || listItem == "") {
+            if (basicItem == "" && listItem == "") {
                 effectAttendPeople--;
                 return true;
             }
@@ -159,6 +159,10 @@ $(function () {
     render();
     paging();
 
+    //dev
+    console.log(attendanceData);
+    console.log(activityData);
+    //dev
     $("#deleteActionBtn").click(function () {
         if (confirm("是否要删除本次活动？")) {
             deleteActivity(aid);
