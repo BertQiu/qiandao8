@@ -77,6 +77,7 @@
         <include refid="full_column"/>
         from `activity`
         where status &lt;2
+        order by id desc
     </select>
     <update id="updateParticipantsNumByPK">
         update activity
@@ -113,6 +114,7 @@
                 and end_Time &lt; #{endTime}
             </if>
         </where>
+        order by id desc
     </select>
     <update id="updateActivitiesStatus">
         update activity
@@ -125,6 +127,7 @@
         from activity
         where status = 0
               and end_time &lt; #{endTime}
+        order by id desc
     </select>
 
     <select id="getOngoingActivity" resultType="int">
@@ -139,4 +142,10 @@
         where id = #{id}
               and originator_id = #{originatorId}
     </update>
+    <select id="checkActivityCreatedByOid" resultType="int">
+        select count(id)
+        from activity
+        where id=#{aid}
+        and originator_id=#{oid}
+    </select>
 </mapper>

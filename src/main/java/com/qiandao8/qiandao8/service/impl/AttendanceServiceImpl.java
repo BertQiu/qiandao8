@@ -1,5 +1,7 @@
 package com.qiandao8.qiandao8.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.qiandao8.qiandao8.common.ServerResponse;
 import com.qiandao8.qiandao8.common.SessionContext;
 import com.qiandao8.qiandao8.common.TokenCache;
@@ -7,6 +9,7 @@ import com.qiandao8.qiandao8.domain.Activity;
 import com.qiandao8.qiandao8.domain.Attendance;
 import com.qiandao8.qiandao8.mapper.ActivityMapper;
 import com.qiandao8.qiandao8.mapper.AttendanceMapper;
+import com.qiandao8.qiandao8.qo.AttendanceQueryObject;
 import com.qiandao8.qiandao8.service.IAttendanceService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +65,7 @@ public class AttendanceServiceImpl implements IAttendanceService {
             return ServerResponse.createByErrorMessage("没有权限");
         }
         Attendance attendance = new Attendance();
-        attendance.setEventId(aid);
+        attendance.setActivityId(aid);
         attendance.setBasicSelcInfo(basicSelcInfo);
         attendance.setListSelcInfo(listSelcInfo);
         // TODO 二期再完成迟到判断
@@ -91,5 +94,18 @@ public class AttendanceServiceImpl implements IAttendanceService {
             return ServerResponse.createByError();
         }
         return ServerResponse.createBySuccess(activity);
+    }
+
+    @Override
+    public ServerResponse listAttendanceInfo(AttendanceQueryObject queryObject) {
+        // 权限检查
+        Long oid = SessionContext.getCurrentUser().getId();
+        int i = activityMapper.checkActivityCreatedByOid(queryObject.getAid(), oid);
+        if (i == 0) {
+            return ServerResponse.createByErrorMessage("没有权限！");
+        }
+        PageHelper.startPage(queryObject.getCurrentPage(), queryObject.getPageSize());
+        PageInfo<Attendance> data = new PageInfo<>(attendanceMapper.listAttendanceByAid(queryObject.getAid()));
+        return ServerResponse.createBySuccess(data);
     }
 }

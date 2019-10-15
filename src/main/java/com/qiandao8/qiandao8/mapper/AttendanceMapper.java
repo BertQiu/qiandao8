@@ -13,4 +13,6 @@ public interface AttendanceMapper {
     List<Attendance> selectAll();
 
     int updateByPrimaryKey(Attendance attendance);
+
+    List<Attendance> listAttendanceByAid(Long aid);
 }

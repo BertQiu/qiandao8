@@ -1,0 +1,100 @@
+body {
+    background-color: #f0f0f0;
+}
+
+.board {
+    width: 1400px;
+    height: 760px;
+    margin: 100px auto 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.board #left {
+    width: 560px;
+    height: 760px;
+    background-color: #cccccc;
+}
+
+.board #left .title {
+    width: 100%;
+    height: 180px;
+    padding-top: 60px;
+}
+
+.board #left .title p {
+    text-align: center;
+    font-size: 36px;
+}
+
+.board #left .qrCode {
+    width: 512px;
+    height: 512px;
+    background-color: white;
+    margin: 0 auto;
+    padding-top: 50px;
+}
+
+.board #left .qrCode img {
+    text-align: center;
+    line-height: 512px;
+}
+
+
+.board #left .img {
+    width: 400px;
+    height: 400px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.board .right {
+    width: 840px;
+    height: 760px;
+    background-color: #ffffff;
+}
+
+.board .right .info {
+    height: 165px;
+    padding-left: 50px;
+    padding-top: 60px;
+    font-size: 18px;
+    color: #666;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.board .right .info #actTitle {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: black;
+    display: block;
+}
+
+.board .right .info p {
+    display: inline-block;
+    margin-right: 25px;
+}
+
+.board .right #joinBoard {
+    height: 595px;
+    text-align: center;
+}
+
+.board .right #joinBoard p {
+    line-height: 595px;
+    font-size: 60px;
+}
+
+.board .right #joinBoard img {
+    margin: 100px auto 60px;
+}
+
+.board .right #joinBoard .noPeople {
+    font-size: 24px;
+    line-height: 0;
+}
+
+#joinNum {
+    color: orange;
+    font: bold 88px arial;
+}

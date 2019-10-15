@@ -1,6 +1,8 @@
 package com.qiandao8.qiandao8.web.controller;
 
 import com.qiandao8.qiandao8.common.ServerResponse;
+import com.qiandao8.qiandao8.common.annotation.RequireLogin;
+import com.qiandao8.qiandao8.qo.AttendanceQueryObject;
 import com.qiandao8.qiandao8.service.IAttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,6 +53,10 @@ public class AttendanceController {
         }
     }
 
+    /**
+     * 获取用户即将签到的那个活动的全部信息
+     * @return
+     */
     @RequestMapping(value = "getAttendActivityInfo.do" ,method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse getAttendActivityInfo() {
@@ -61,5 +67,15 @@ public class AttendanceController {
     @ResponseBody
     public ServerResponse attendActivity(String basicSelcInfo, String listSelcInfo, HttpServletRequest request) {
         return attendanceService.attendActivity(basicSelcInfo, listSelcInfo, request.getRemoteAddr());
+    }
+
+    /**
+     * 获取用户发起的某项活动的全部参与者签到信息
+     */
+    @RequestMapping(value = "listAttendanceInfo.do", method = RequestMethod.GET)
+    @ResponseBody
+    @RequireLogin
+    public ServerResponse listAttendanceInfo(AttendanceQueryObject queryObject) {
+        return attendanceService.listAttendanceInfo(queryObject);
     }
 }

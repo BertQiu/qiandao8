@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script src="js/util/xlPaging.js"></script>
+    <link rel="stylesheet" href="css/pagehelper.css">
 </head>
 <body>
 <form action="/test">
@@ -17,5 +20,20 @@
 
 
 <div style="color: yellow;font-size: 39px;">askdjflksdd <span>123123123</span> </div>
+<div id="page">wf we fds sd <f></f></div>
+
+<script>
+    $("#page").paging({
+        nowPage: 1, // 当前页码
+        pageNum: 2, // 总页码
+        buttonNum: 3, //要展示的页码数量
+        canJump: 1,// 是否能跳转。0=不显示（默认），1=显示
+        showOne: 0,//只有一页时，是否显示。0=不显示,1=显示（默认）
+        callback: function (num) { //回调函数
+            nowPage = num;
+            refresh();
+        }
+    });
+</script>
 </body>
 </html>

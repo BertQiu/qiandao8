@@ -66,20 +66,29 @@ function addItem(ev,type,title) {
 }
 
 $(function () {
+    // 自定义日期验证
+    $.validator.methods.compareDate = function(value, element, param) {
+        return new Date(value).getTime() >= new Date(param).getTime()
+    };
     $("#InfoForm").validate({
         rules: {
             activityName: "required",
             originator: "required",
             endTime: {
                 required: true,
-                date: true
+                date: true,
+                compareDate: new Date()
             },
 
         },
         messages: {
             activityName: "请填写活动名",
             originator: "请填写发起者",
-            endTime: "请填写正确的日期",
+            endTime: {
+                required: "结束时间不能为空",
+                date: "请填写正确的日期",
+                compareDate: "结束日期必须大于开始日期!"
+            }
         }
     });
 

@@ -34,4 +34,6 @@ public interface ActivityMapper {
     int getOngoingActivity(Long id);
 
     int deleteActivity(@Param("id")Long id,@Param("originatorId")Long originatorId);
+
+    int checkActivityCreatedByOid(@Param("aid")Long aid,@Param("oid")Long oid);
 }

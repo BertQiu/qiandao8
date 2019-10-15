@@ -2,14 +2,16 @@ package com.qiandao8.qiandao8.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Date;
 
 @Getter
 @Setter
+@ToString
 public class Attendance {
     private Long id;
-    private Long eventId;
+    private Long activityId;
     private Integer status;
     private String ipAddr;
     private Date checkInTime;
