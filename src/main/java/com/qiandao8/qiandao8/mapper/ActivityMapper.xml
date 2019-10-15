@@ -62,18 +62,21 @@
         <include refid="full_column"/>
         from `activity`
         where id = #{id}
+        and status &lt;2
     </select>
     <select id="selectEnableActivityByPk" resultMap="BaseResultMap">
         select
         <include refid="full_column"/>
         from `activity`
         where id = #{id}
+        and status &lt;2
     </select>
 
     <select id="selectAll" resultMap="BaseResultMap">
         select
         <include refid="full_column"/>
         from `activity`
+        where status &lt;2
     </select>
     <update id="updateParticipantsNumByPK">
         update activity

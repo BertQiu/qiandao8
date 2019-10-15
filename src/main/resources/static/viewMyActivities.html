@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="css/pagehelper.css">
     <script src="js/util/xlPaging.js"></script>
     <script src="js/util/DateUtils.js"></script>
-
+    <link rel="stylesheet" href="css/viewMyActivities.css">
 
     <script>
         var activitiesData;
@@ -180,14 +180,11 @@
                 showOne: 0,//只有一页时，是否显示。0=不显示,1=显示（默认）
                 callback: function (num) { //回调函数
                     nowPage = num;
-                    initData();
-                    render($("#activitiesInfo"));
-                    paging();
+                    refresh();
                 }
             });
         })
     </script>
-    <link rel="stylesheet" href="css/viewMyActivities.css">
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -200,14 +197,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand navTitle" href="#">签到吧</a>
+            <a class="navbar-brand navTitle" href="index.html">签到吧</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navItem">
                 <li><a href="index.html">首页</a></li>
                 <li><a href="createActivityChoice.html">创建活动</a></li>
                 <li class="active"><a href="viewMyActivities.html">我创建的</a></li>
-                <li><a href="#contact">我参与的</a></li>
                 <li><a href="#contact">使用帮助</a></li>
             </ul>
             <ul id="userInfo" class="nav navbar-nav navbar-right hidden-sm"></ul>
@@ -225,8 +221,6 @@
         <a href="createActivity.html"><span class="glyphicon glyphicon-plus"></span>创建单次活动</a>
     </div>
     <div id="activitiesInfo"></div>
-
-
 </div>
 
 </body>
