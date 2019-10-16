@@ -54,7 +54,7 @@ function renderHead() {
 }
 
 function renderTable() {
-    var rows = 0;
+    var rows = 1;//1是签到时间
     // 渲染表格
     var appendedHtmlCode="";
     var tableEl = $("#activitiesInfo");
@@ -72,6 +72,7 @@ function renderTable() {
         appendedHtmlCode += "<td>" + v.title + "</td>";
         rows++;
     });
+    appendedHtmlCode +="<td>签到时间</td>";
     appendedHtmlCode += "</tr>\n" +
         "</thead>";
     //没人签到
@@ -101,7 +102,8 @@ function renderTable() {
             $.each(listItem, function (i,v) {
                 appendedHtmlCode+="<td>"+v.selectedOption+"</td>"
             });
-            appendedHtmlCode+="</tr>"
+            appendedHtmlCode += "<td>" + dateFormat(v.checkInTime)+ "</td>";
+            appendedHtmlCode += "</tr>";
         });
         appendedHtmlCode+="<tr><td colspan=\""+rows+"\">\n" +
             "<p class=\"countAll\">共有<span id=\"pageTotal\">"+effectAttendPeople+"</span>条有效数据</p>\n" +
