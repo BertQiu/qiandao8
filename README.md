@@ -4,7 +4,7 @@
 
 ------
 
-本项目基于Springboot2.1.8开发，前端页面由bootstrap+jQuery编写，全部采用前后端分离的模式，前端发送ajax请求，后端返回json格式的数据。
+本项目基于Springboot2.1.8开发，前端页面由bootstrap3+jQuery编写，全部采用前后端分离的模式，前端发送ajax请求，后端返回json格式的数据。
 
 ### 如何部署
 
