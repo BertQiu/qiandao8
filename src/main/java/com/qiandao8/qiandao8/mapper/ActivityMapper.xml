@@ -97,7 +97,6 @@
             originator_id = #{originatorId}
             #            删除的查询不到
             and status &lt; 2
-
             <if test="activityName!=null">
                 and activity_name = #{activityName}
             </if>
