@@ -11,8 +11,11 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author Bert Q
+ * 活动实体类
+ */
 @Getter
-@ToString
 public class Activity {
     @Setter
     private Long id;

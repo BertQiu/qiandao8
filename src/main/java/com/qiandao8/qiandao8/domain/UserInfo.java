@@ -6,9 +6,12 @@ import lombok.ToString;
 
 import java.util.Date;
 
+/**
+ * @author Bert Q
+ * 登录用户实体类
+ */
 @Getter
 @Setter
-@ToString
 public class UserInfo {
     private Long id;
     private String username;

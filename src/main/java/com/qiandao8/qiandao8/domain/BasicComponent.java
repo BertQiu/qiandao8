@@ -4,14 +4,12 @@ import lombok.*;
 
 /**
  * @author Bert Q
- * ClassName : TestComponent
- * Description TODO
+ * 基础组件类（文本组件）
  */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class BasicComponent {
 
     /**

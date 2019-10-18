@@ -6,9 +6,12 @@ import lombok.ToString;
 
 import java.util.Date;
 
+/**
+ * @author Bert Q
+ * 活动参与信息实体类
+ */
 @Getter
 @Setter
-@ToString
 public class Attendance {
     private Long id;
     private Long activityId;

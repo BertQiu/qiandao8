@@ -7,8 +7,7 @@ import java.util.List;
 
 /**
  * @author Bert Q
- * ClassName : ListComponent
- * Description TODO
+ * 下拉组件类
  */
 @Getter
 @NoArgsConstructor
