@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class Qiandao8ApplicationTests {
 
 //        String excelFile = ExcelUtils.createExcelFile(activity, attendances);
 //        System.out.println(excelFile);
+        System.out.println(Arrays.toString(ExcelUtils.parseSignInRules("")));
 
     }
 
