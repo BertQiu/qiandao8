@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  * @author Bert Q
  * ClassName : ActivityServiceImpl
@@ -39,6 +38,7 @@ public class ActivityServiceImpl implements IActivityService {
     public ServerResponse createActivity(Activity activity) {
         try {
             if (StringUtils.isBlank(activity.getActivityName())
+                    || StringUtils.isBlank(activity.getOriginator())
                     || activity.getStartTime() == null
                     || activity.getEndTime() == null) {
                 return ServerResponse.createByErrorMessage("创建活动失败!非法参数！");
@@ -47,6 +47,7 @@ public class ActivityServiceImpl implements IActivityService {
             activity.setStatus(Activity.STATES_NORMAL);
             activity.setParticipantsNums(0);
             activity.setOriginatorId(SessionContext.getCurrentUser().getId());
+            activity.setType(Activity.EFFECT_ONCE);
 
             if (activity.getEndTime().getTime() < activity.getStartTime().getTime()) {
                 activity.setEndTime(activity.getStartTime());
@@ -61,6 +62,36 @@ public class ActivityServiceImpl implements IActivityService {
                 return ServerResponse.createBySuccessMessage("创建活动成功！");
             }
         } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return ServerResponse.createByErrorMessage("创建活动失败!");
+        }
+
+        return ServerResponse.createByErrorMessage("创建活动失败!");
+    }
+
+    @Override
+    @Transactional
+    public ServerResponse createRoutineActivity(Activity activity) {
+        try {
+            if (StringUtils.isBlank(activity.getActivityName())
+                    || StringUtils.isBlank(activity.getOriginator())){
+                return ServerResponse.createByErrorMessage("创建活动失败!非法参数！");
+            }
+            activity.setId(null);
+            activity.setStatus(Activity.STATES_NORMAL);
+            activity.setParticipantsNums(0);
+            activity.setOriginatorId(SessionContext.getCurrentUser().getId());
+
+            // 用excelUtil读
+
+            // =================================
+
+            if (activityMapper.insert(activity) > 0) {
+                // 将最近一次生成的活动放到session中
+                SessionContext.putNearestActivity(activity);
+                return ServerResponse.createBySuccessMessage("创建活动成功！");
+            }
+        } catch (Exception e) {
             e.printStackTrace();
             return ServerResponse.createByErrorMessage("创建活动失败!");
         }

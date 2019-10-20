@@ -23,7 +23,9 @@ spring:
         enabled: true
   jackson:
     default-property-inclusion: non_null
-
+  servlet:
+    multipart:
+      max-file-size: 10MB
 #mybatis的配置
 mybatis:
 #  mapper-locations:

@@ -46,7 +46,7 @@ public class UserServiceImpl implements IUserInfoService {
     }
 
     @Override
-    public ServerResponse login(String username, String password) {
+    public ServerResponse login(String username, String password,String ip) {
         UserInfo currentUser = userInfoMapper.getUserInfoByUsernameAndPassword(username, MD5Utils.getEncodingMD5(password));
         // 查询不到这个用户
         if (currentUser == null) {
@@ -55,7 +55,7 @@ public class UserServiceImpl implements IUserInfoService {
         //将当前用户对象存放到session中
         SessionContext.putCurrentUser(currentUser);
         //更新最后一次登录的时间
-        userInfoMapper.updateLastLoginTimeByPK(currentUser.getId());
+        userInfoMapper.updateLastLoginTimeByPK(currentUser.getId(),ip);
         return ServerResponse.createBySuccessMessage("登录成功！");
     }
 

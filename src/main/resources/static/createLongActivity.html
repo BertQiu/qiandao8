@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>创建周期活动 签到吧 --基于web的签到平台</title>
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <!--自定义-->
+    <link rel="stylesheet" href="css/myNavBar.css">
+    <link rel="stylesheet" href="css/error.css">
+    <script src="js/isLogin.js"></script>
+    <script src="js/getLoginStatus.js"></script>
+    <script src="js/util/DateUtils.js"></script>
+    <script src="js/jquery-validate.js"></script>
+    <script src="js/util/ArrayUtils.js"></script>
+    <script src="js/util/ComponentUtils.js"></script>
+    <style>
+        body {
+            background-color: #f0f0f0;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .shadow {
+            box-shadow: 0 0 8px #c9c5c8;
+        }
+
+        .main {
+            width: 1585px;
+            background-color: #ffffff;
+
+            margin: 80px auto 20px;
+            border: 1px solid #d7d7d7;
+        }
+
+        .main > .header {
+            height: 50px;
+            background-color: #ffffff;
+            line-height: 50px;
+            padding-left: 15px;
+            border-bottom: 1px solid #e7e7eb;
+        }
+
+        .content {
+            padding-top: 50px;
+            font: 18px "Microsoft YaHei ";
+        }
+
+        .content .allInfo {
+            width: 1020px;
+            border: 1px solid #e7e7eb;
+            padding-top: 10px;
+        }
+
+        .content label {
+            margin-right: 50px;
+        }
+
+        .content input {
+            height: 40px;
+        }
+
+        .content .selectPanel {
+            width: 1000px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e7e7eb;
+        }
+
+        .content .selectPanel .createdItems {
+            font: 16px "Microsoft YaHei UI Light";
+        }
+
+        .content .form-group a {
+            margin-left: 30px;
+            font-size: 14px;
+            color: #ea853c;
+            text-decoration: none;
+        }
+
+        .content .form-group p {
+        }
+
+        .content .selectPanel .createdItems .basicCreatedItem {
+            width: 1000px;
+            display: inline-block;
+            padding-bottom: 6px;
+            margin-bottom: 4px;
+            margin-top: 2px;
+        }
+
+        .content .selectPanel .createdItems .listCreatedItem {
+            width: 1000px;
+            display: inline-block;
+            padding-bottom: 6px;
+            margin-bottom: 4px;
+            margin-top: 2px;
+        }
+
+        .content .selectPanel .createdItems label {
+            display: inline-block;
+            margin-left: 10px;
+            margin-right: 12px;
+        }
+
+        .content .selectPanel .createdItems input {
+            display: inline-block;
+            width: 200px;
+            height: 32px;
+            margin-right: 20px;
+        }
+
+        .content .basicItems {
+            padding-top: 20px;
+            border-bottom: 1px solid #e7e7eb;
+            width: 1000px;
+            padding-bottom: 20px;
+        }
+
+        .content .basicItems p {
+            font-size: 16px;
+        }
+
+        .content .choiceBtn {
+            width: 200px;
+            margin: 3px 20px 5px 10px;
+        }
+
+        .content .listItems {
+            padding-top: 20px;
+            width: 1000px;
+            padding-bottom: 20px;
+        }
+
+        .content .ml15 {
+            margin-left: -19px;
+        }
+
+        .content .listItems p {
+            font-size: 16px;
+        }
+
+        .content .myRadio {
+            font-size: 14px;
+            line-height: 45px;
+            margin-top: -8px;
+        }
+
+        .hintParent {
+            display: inline-block;
+            position: relative;
+        }
+
+        .hintParent #hintPic {
+            position: absolute;
+            left: 110px;
+            top: -60px;
+            display: none;
+        }
+
+        #submit {
+            width: 120px;
+            font-size: 16px;
+            margin: 30px auto 30px;
+        }
+
+        .fontSize14 {
+            font-size: 14px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .mt5px {
+            margin-top: 5px;
+        }
+
+    </style>
+
+    <script>
+        var fileName = "";// 后台返回的文件名
+        var successSubmit = false;
+        function getFileType(filename) {
+            var startIndex = filename.lastIndexOf(".");
+            if (startIndex != -1)
+                return filename.substring(startIndex + 1, filename.length).toLowerCase();
+            else return "";
+        }
+
+        function uploadExcel() {
+            var type = "file";          //后台接收时需要的参数名称，自定义即可
+            var formData = new FormData();
+            formData.append(type, $("#fileUpload")[0].files[0]);    //生成一对表单属性
+            $.ajax({
+                type: "POST",           //因为是传输文件，所以必须是post
+                url: '/activity/uploadRuleExcel.do',         //对应的后台处理类的地址
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    console.log(result);
+                    if (result.success) {
+                        fileName = result.data;
+                        $("#fileUploadError").addClass("hidden");
+                        successSubmit = true;
+                    }else {
+                        $("#fileUploadError").removeClass("hidden");
+                        successSubmit = false;
+                    }
+                }
+            });
+        }
+
+        $(function () {
+            $("#hint").mouseover(function () {
+                $("#hintPic").css('display', 'block');
+            });
+            $("#hint").mouseleave(function () {
+                $("#hintPic").css('display', 'none')
+            });
+            $("#selectExcel").click(function () {
+                document.getElementById("fileUpload").click();
+            });
+            $("#fileUpload").change(function () {
+                var file = $("#fileUpload")[0].files[0];
+                fileName = file.name;
+                if (file != null) {
+                    $("#fileInfo").removeClass("hidden");
+                    $("#fileName").text(fileName);
+                    var fileType = getFileType(fileName);
+                    if (fileType === "xls" || fileType === "xlsx") {
+                        $("#fileTypeError").addClass("hidden");
+                        $("#fileEmptyError").addClass("hidden");
+                        //-----------上传excel---------------//
+                        uploadExcel();
+                        //-----------上传excel---------------//
+                    } else {
+                        $("#fileTypeError").removeClass("hidden");
+                        successSubmit = false;
+                    }
+                }
+            });
+
+            $("#InfoForm").validate({
+                rules: {
+                    activityName: "required",
+                    originator: "required",
+                },
+                messages: {
+                    activityName: "请填写活动名",
+                    originator: "请填写发起者",
+                }
+            });
+
+
+            $("#submit").click(function () {
+                $.ajax({
+                    type: "post",
+                    url: "/activity/createRoutineActivity.do",
+                    data: {
+                        activityName: $("input[name=activityName]").val(),
+                        originator: $("input[name=originator]").val(),
+                        type: $("input[name=myRadio]:checked").val(),
+                    },
+                    dataType: "json",
+                    beforeSend: function () {
+                        if (!successSubmit) {
+                            $("#fileEmptyError").removeClass("hidden");
+                            return false;
+                        }
+                        return $("#InfoForm").valid();
+                    },
+                    success: function (result) {
+                        if (result.success) {
+                            window.location.href="signinBoard.html"
+                        } else if (!result.success) {
+                            alert("提交失败！" + result.msg);
+                        }
+                    }
+                });
+            });
+        })
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand navTitle" href="index.html">签到吧</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navItem">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="createActivityChoice.html">创建活动</a></li>
+                <li><a href="viewMyActivities.html">我创建的</a></li>
+                <li><a href="#contact">使用帮助</a></li>
+            </ul>
+            <ul id="userInfo" class="nav navbar-nav navbar-right hidden-sm"></ul>
+        </div>
+    </div>
+</nav>
+
+<div class="main shadow">
+    <div class="header">
+        <a href="createActivityChoice.html">&lt;创建签到</a><span>/周期活动签到</span>
+    </div>
+    <div class="content">
+        <form id="InfoForm" class="form-horizontal">
+            <div class="form-group">
+                <label for="inputActName" class="col-sm-2 control-label">
+                    <span class="red">*</span>活动名称:
+                </label>
+                <div class="col-sm-10 col-lg-3">
+                    <input type="text" name="activityName" class="form-control " id="inputActName" placeholder="活动名称">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputOriginator" class="col-sm-2 control-label">
+                    <span class="red">*</span>发起人:
+                </label>
+                <div class="col-sm-10 col-lg-3">
+                    <input type="text" name="originator" class="form-control " id="inputOriginator" placeholder="发起人">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputOriginator" class="col-sm-2 control-label">
+                    <span class="red">*</span>名单匹配:
+                </label>
+                <div class="col-sm-10 col-lg-3 mt5px">
+                    <button type="button" id="selectExcel" class="btn btn-warning">选择文件</button>
+                    <div class="hintParent">
+                        <a href="#" id="hint">查看示例</a>
+                        <div id="hintPic">
+                            <img src="images/uploadExcelExample.png" alt="">
+                        </div>
+                    </div>
+                    <a href="/activity/downloadHintExcel.do">下载示例Excel文件</a>
+                </div>
+            </div>
+            <div  class="form-group fontSize14 ">
+                <label for="inputOriginator" class="col-sm-2 control-label">
+                </label>
+                <div class="col-sm-10 col-lg-3">
+                    <p id="fileInfo" class="hidden">您已经选择文件：<span id="fileName"></span></p>
+                    <p id="fileTypeError" class="red hidden"><span class="glyphicon glyphicon-remove-sign"></span>
+                        仅支持上传xls、xlsx等格式的文件</p>
+                    <p id="fileUploadError" class="red hidden"><span class="glyphicon glyphicon-remove-sign"></span>
+                        文件上传失败！</p>
+                    <p id="fileEmptyError" class="red hidden"><span class="glyphicon glyphicon-remove-sign"></span>
+                        请检查文件是否上传成功</p>
+                </div>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label for="inputOriginator" class="col-sm-2 control-label">
+                    <span class="red">*</span>允许名单外人员签到:
+                </label>
+                <div class="col-sm-10 col-lg-3 myRadio">
+                    <label class="radio-inline">
+                        <input type="radio" name="myRadio" id="allowOuter" value="2" checked="checked"> 允许
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="myRadio" id="denyOuter" value="1"> 不允许
+                    </label>
+                </div>
+            </div>
+
+            <button id="submit" class="btn btn-sm btn-warning btn-block" type="button">立即提交</button>
+
+        </form>
+            <input id="fileUpload" class="hidden" type="file" name="excelFile"
+                   accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+    </div>
+</div>
+
+</body>
+</html>

@@ -20,7 +20,7 @@ public interface IUserInfoService {
      * 用户登录
      * @return
      */
-    ServerResponse login(String username,String password);
+    ServerResponse login(String username,String password,String ip);
 
     /**
      * 更新用户信息

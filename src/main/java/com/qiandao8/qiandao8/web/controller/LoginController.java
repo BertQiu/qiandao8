@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -26,8 +27,8 @@ public class LoginController {
 
     @RequestMapping(value = "login.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse login(String username, String password) {
-        return userInfoService.login(username, password);
+    public ServerResponse login(String username, String password, HttpServletRequest request) {
+        return userInfoService.login(username, password,request.getRemoteAddr());
     }
 
     @RequestMapping(value = "logout.do", method = RequestMethod.GET)

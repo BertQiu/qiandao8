@@ -24,6 +24,9 @@ public class ExcelUtils {
     private static ObjectMapper jsonParser;
 
     public static String EXCEL_FILE_FOLDER_ROOT;
+    public static String EXCEL_FILE_FOLDER_RULES;
+    public static String EXCEL_FILE_FOLDER_EXAMPLE;
+    public static String EXCEL_FILE_FOLDER_ATTENDANCE;
 
     @Autowired
     public void setJsonParser(ObjectMapper jsonParser) {
@@ -33,6 +36,21 @@ public class ExcelUtils {
     @Value("${Excel.fileFolder.root}")
     public void setExcelFileFolderRoot(String excelFileFolderRoot) {
         EXCEL_FILE_FOLDER_ROOT = excelFileFolderRoot;
+    }
+
+    @Value("${Excel.fileFolder.rules}")
+    public  void setExcelFileFolderRules(String excelFileFolderRules) {
+        EXCEL_FILE_FOLDER_RULES = excelFileFolderRules;
+    }
+
+    @Value("${Excel.fileFolder.example}")
+    public  void setExcelFileFolderExample(String excelFileFolderExample) {
+        EXCEL_FILE_FOLDER_EXAMPLE = excelFileFolderExample;
+    }
+
+    @Value("${Excel.fileFolder.attendance}")
+    public  void setExcelFileFolderAttendance(String excelFileFolderAttendance) {
+        EXCEL_FILE_FOLDER_ATTENDANCE = excelFileFolderAttendance;
     }
 
     /**

@@ -15,17 +15,19 @@
         <result column="update_time" property="updateTime"/>
         <result column="basic_selc" property="basicSelc"/>
         <result column="list_selc" property="listSelc"/>
+        <result column="static_qrcode_token" property="staticQrcodeToken"/>
+        <result column="rule_excel_name" property="ruleExcelName"/>
     </resultMap>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.qiandao8.qiandao8.domain.Activity"
             useGeneratedKeys="true">
         insert into `activity` (activity_name, originator, originator_id, start_time,
                                 end_time, status, type,
                                 participants_nums, create_time, update_time,
-                                basic_selc, list_selc)
+                                basic_selc, list_selc,static_qrcode_token,rule_excel_name)
         values (#{activityName}, #{originator}, #{originatorId}, #{startTime},
                                  #{endTime}, #{status}, #{type},
                                  #{participantsNums}, now(), now(),
-                                 #{basicSelc}, #{listSelc})
+                                 #{basicSelc}, #{listSelc},#{staticQrcodeToken},#{ruleExcelName})
     </insert>
     <update id="increaseParticipantsNumByPK">
         update activity

@@ -5,27 +5,27 @@
         <id column="id" property="id"/>
         <result column="nick_name" property="nickName"/>
         <result column="username" property="username"/>
-        <result column="password"  property="password"/>
-        <result column="email"  property="email"/>
-        <result column="phone_number"  property="phoneNumber"/>
+        <result column="password" property="password"/>
+        <result column="email" property="email"/>
+        <result column="phone_number" property="phoneNumber"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
         <result column="last_login_time" property="lastLoginTime"/>
     </resultMap>
 
     <resultMap id="BaseResultMap" type="com.qiandao8.qiandao8.domain.UserInfo">
-        <id column="id"  property="id"/>
+        <id column="id" property="id"/>
         <result column="nick_name" property="nickName"/>
-        <result column="username"  property="username"/>
-        <result column="email"  property="email"/>
-        <result column="phone_number"  property="phoneNumber"/>
-        <result column="create_time"  property="createTime"/>
-        <result column="last_login_time"  property="lastLoginTime"/>
+        <result column="username" property="username"/>
+        <result column="email" property="email"/>
+        <result column="phone_number" property="phoneNumber"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_login_time" property="lastLoginTime"/>
     </resultMap>
 
     <sql id="full_column">nick_name, username, password,
     email, phone_number, create_time,
-    update_time,last_login_time</sql>
+    update_time, last_login_time</sql>
 
     <sql id="base_column">id, nick_name, username,
     email, phone_number, create_time
@@ -91,14 +91,15 @@
 
     <update id="updatePasswordByUsername">
         update user_info
-        set password = #{password},
-            update_time  = now()
+        set password    = #{password},
+            update_time = now()
         where username = #{username}
     </update>
 
-    <update id="updateLastLoginTimeByPK"  >
+    <update id="updateLastLoginTimeByPK">
         update user_info
-        set last_login_time = now()
+        set last_login_time = now(),
+            ip_addr         = #{ipAddr}
         where id = #{PK}
     </update>
 </mapper>

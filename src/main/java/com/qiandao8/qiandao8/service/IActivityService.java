@@ -24,4 +24,6 @@ public interface IActivityService {
     void updateActivitiesStatus();
 
     ServerResponse deleteActivities(Long aid);
+
+    ServerResponse createRoutineActivity(Activity activity);
 }

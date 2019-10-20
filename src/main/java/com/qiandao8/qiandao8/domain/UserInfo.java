@@ -22,4 +22,5 @@ public class UserInfo {
     private Date createTime;
     private Date updateTime;
     private Date lastLoginTime;
+    private String ipAddr;
 }

@@ -25,5 +25,5 @@ public interface UserInfoMapper {
 
     int updatePasswordByUsername(@Param("username") String username, @Param("password") String newPassword);
 
-    void updateLastLoginTimeByPK(Long PK);
+    void updateLastLoginTimeByPK(@Param("PK")Long PK,@Param("ipAddr")String ipAddr);
 }

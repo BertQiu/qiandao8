@@ -16,6 +16,7 @@ import java.util.List;
  * 活动实体类
  */
 @Getter
+@ToString
 public class Activity {
     @Setter
     private Long id;
@@ -51,17 +52,24 @@ public class Activity {
     private String basicSelc;
     @Setter
     private String listSelc;
-
+    @Setter
+    private String staticQrcodeToken;
+    @Setter
+    private String ruleExcelName;
     /**
      * 用于标记type：一次性的活动
      */
     public static final int EFFECT_ONCE = 0;
 
     /**
-     * 用于标记type：周期生效的活动
+     * 用于标记type：周期生效的活动(不允许外人和签到)
      */
-    public static final int EFFECT_ROUTINE = 1;
+    public static final int EFFECT_ROUTINE_PRIVATE = 1;
 
+    /**
+     * 用于标记type：周期生效的活动(允许外人和签到)
+     */
+    public static final int EFFECT_ROUTINE_PUBLIC = 2;
 
     /**
      * 用于将特定字符串解析为json所用到的中间模型

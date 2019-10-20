@@ -156,11 +156,13 @@ function deleteActivity(aid) {
     });
 }
 
+function downloadExcel() {
+    var aid = aid;
+}
 $(function () {
     initData();
     render();
     paging();
-
     $("#deleteActionBtn").click(function () {
         if (confirm("是否要删除本次活动？")) {
             deleteActivity(aid);

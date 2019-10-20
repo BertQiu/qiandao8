@@ -15,7 +15,6 @@
 
 .circle {
     background-image: url(../images/choose-cycle.jpg);
-    filter: grayscale(100%);
 }
 
 .title {
