@@ -13,6 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ClassUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,10 +32,14 @@ public class ExcelUtils {
 
     private static ObjectMapper jsonParser;
 
+    public static String PROJECT_ROOT = ClassUtils.getDefaultClassLoader().getResource("").getPath();
+
     public static String EXCEL_FILE_FOLDER_ROOT;
     public static String EXCEL_FILE_FOLDER_RULES;
     public static String EXCEL_FILE_FOLDER_EXAMPLE;
     public static String EXCEL_FILE_FOLDER_ATTENDANCE;
+
+    public static final String DEFAULT_SURFIX = ".xlsx";
 
     @Autowired
     public void setJsonParser(ObjectMapper jsonParser) {
@@ -79,12 +84,10 @@ public class ExcelUtils {
 
         // ------------- Design By GG --------------
         Workbook workbook = new XSSFWorkbook();
-        //excel里sheet的名称,按需求改动
-        Sheet sheet = workbook.createSheet("activityName");
+        Sheet sheet = workbook.createSheet(activityName);
         Row row = sheet.createRow(0);
         Cell cell = row.createCell(0);
-        //标题框内文字,按需求改动
-        cell.setCellValue("activityName");
+        cell.setCellValue(activityName);
         cell.setCellStyle(setCellStyle(workbook));
         // ---------- 得到了所有的基本签到信息
         int rowNumber = 1;
@@ -126,14 +129,21 @@ public class ExcelUtils {
                 componentNumber++;
             }
             // 最后一列组件 要一个签到信息，
-//            String checkInTime = DateUtils.dateFormat(attendance.getCheckInTime());
-            fillAttendanceInfo(sheet, rowNumber, cellNumber, "签到时间", "1111");
+            String checkInTime = DateUtils.dateFormat(attendance.getCheckInTime());
+            fillAttendanceInfo(sheet, rowNumber, cellNumber, "签到时间", checkInTime);
             // -------------      END       -----------
         }
         sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, componentNumber / attendances.size()));
-        //输出地址,按需求改动
-        FileOutputStream outputStream = new FileOutputStream("D:\\Programming\\IntelliJ IDEA 2019.1" +
-                ".2\\Workplace\\Qiandao8ExcelTest\\test.xlsx");
+        // 判断文件夹是否存在
+        File targetFilePath = new File(PROJECT_ROOT +EXCEL_FILE_FOLDER_ATTENDANCE);
+        if(!targetFilePath.exists()){
+            targetFilePath.mkdirs();
+        }
+        //
+        FileOutputStream outputStream = new FileOutputStream(PROJECT_ROOT
+                +EXCEL_FILE_FOLDER_ATTENDANCE
+                +activityName + activity.getId()+DEFAULT_SURFIX);
+
         workbook.write(outputStream);
         outputStream.close();
         // 返回一个地址
@@ -145,15 +155,12 @@ public class ExcelUtils {
      *
      * @return
      */
-    public static String[] parseSignInRules(String excelPath) {
-        String[] ret = new String[2];
+    public static String parseSignInRules(String excelPath) {
+        String ret = "";
         /* 要求：
          * 给你一个excelPath，读取到excel
          * 将他里面的信息解析出来
-         * 将标题封装到 String[0]
-         * 将文本组件(basicComponent)解析出来，转换成JsonString，将String封装到String[1]
-         * 将下拉组件(basicComponent)解析出来，转换成JsonString，将String封装到String[2]
-         *
+         * 将文本组件(basicComponent)解析出来，转换成JsonString，
          * ↓↓ 将对象转换为jsonString 的方法 ↓↓
          * String string = jsonParser.writeValueAsString(需要被转换的对象);
          *
@@ -161,7 +168,6 @@ public class ExcelUtils {
 
         // ------------- Design By GG --------------
         //读取地址,按需求改动
-        excelPath = "D:\\Programming\\IntelliJ IDEA 2019.1.2\\Workplace\\Qiandao8ExcelTest\\test.xlsx";
         Workbook workbook = null;
         try {
             if (excelPath.endsWith(".xls")) {
@@ -174,15 +180,13 @@ public class ExcelUtils {
         }
         Sheet sheet = workbook.getSheetAt(0);
         Row row = sheet.getRow(0);
-        Cell cell = row.getCell(0);
-        ret[0] = cell.getStringCellValue();
-        row = sheet.getRow(1);
+        Cell cell = null;
         String[] titles = new String[row.getLastCellNum()];
         for (int i = 0; i < row.getLastCellNum(); i++) {
             titles[i] = row.getCell(i).getStringCellValue();
         }
         List<List<BasicComponent>> list = new ArrayList<>();
-        for (int i = 2; i < sheet.getLastRowNum(); i++) {
+        for (int i = 1; i < sheet.getLastRowNum() + 1; i++) {
             List<BasicComponent> basicComponentList = new ArrayList<>();
             row = sheet.getRow(i);
             for (int j = 0; j < row.getLastCellNum(); j++) {
@@ -195,7 +199,7 @@ public class ExcelUtils {
             list.add(basicComponentList);
         }
         try {
-            ret[1] = jsonParser.writeValueAsString(list);
+            ret = jsonParser.writeValueAsString(list);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -212,7 +216,7 @@ public class ExcelUtils {
      * @param title      组件标题
      * @param content    组件内容
      */
-    public static void fillAttendanceInfo(Sheet sheet, int rowNumber, int cellNumber,
+    private static void fillAttendanceInfo(Sheet sheet, int rowNumber, int cellNumber,
                                           String title,
                                           String content) {
         sheet.setColumnWidth(cellNumber, title.getBytes().length * 2 * 256);
@@ -248,7 +252,7 @@ public class ExcelUtils {
      * @param workbook 设置格式的单元格所在的Workbook
      * @return
      */
-    public static CellStyle setCellStyle(Workbook workbook) {
+    private static CellStyle setCellStyle(Workbook workbook) {
         CellStyle cellStyle = workbook.createCellStyle();
         cellStyle.setAlignment(HorizontalAlignment.CENTER);
         Font font = workbook.createFont();

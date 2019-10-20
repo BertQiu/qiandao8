@@ -25,4 +25,11 @@ public interface IAttendanceService {
      * 获取用户发起的某项活动的全部参与者签到信息
      */
     ServerResponse listAttendanceInfo(AttendanceQueryObject queryObject);
+
+    /**
+     * 生成有签到信息的excel文件
+     * 如果成功，返回文件名
+     * 如果失败，抛出异常
+     */
+    String createAttendanceExcel(Long aid);
 }

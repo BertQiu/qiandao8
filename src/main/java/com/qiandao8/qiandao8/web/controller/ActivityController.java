@@ -45,7 +45,7 @@ public class ActivityController {
     public ServerResponse createRoutineActivity(Activity activity,@RequestParam("fileName") String fileName) {
         System.out.println(activity);
         System.out.println(fileName);
-        return activityService.createRoutineActivity(activity);
+       return activityService.createRoutineActivity(activity,fileName);
     }
 
     @RequestMapping(value = "getParticipantNumbers.do", method = RequestMethod.GET)
@@ -84,7 +84,7 @@ public class ActivityController {
     @RequestMapping(value = "downloadHintExcel.do", method = RequestMethod.GET)
     @RequireLogin
     public void downloadHintExcel(HttpServletRequest request, HttpServletResponse response) {
-        String folderPath = Objects.requireNonNull(ClassUtils.getDefaultClassLoader().getResource("")).getPath() + "/excels/example";
+        String folderPath = ExcelUtils.PROJECT_ROOT + ExcelUtils.EXCEL_FILE_FOLDER_EXAMPLE;
         String fileName = "example.xls";
         try (
                 //jdk7新特性，可以直接写到try()括号里面，java会自动关闭

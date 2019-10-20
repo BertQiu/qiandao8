@@ -36,6 +36,16 @@ public class ActivityQueryObject extends AbstractQueryObject {
     private Integer status;
 
     /**
+     * 高级查询条件:活动类型
+     * 0.单次活动 1.私有周期活动 2.共有周期活动
+     * 提供准确查询，或者模糊查询
+     */
+    private Integer type;
+    private Integer typeStart;
+    private Integer typeEnd;
+
+
+    /**
      * 高级查询条件:活动起始时间
      */
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")

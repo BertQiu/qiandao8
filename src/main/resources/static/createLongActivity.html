@@ -189,6 +189,7 @@
     <script>
         var fileName = "";// 后台返回的文件名
         var successSubmit = false;
+
         function getFileType(filename) {
             var startIndex = filename.lastIndexOf(".");
             if (startIndex != -1)
@@ -212,7 +213,7 @@
                         fileName = result.data;
                         $("#fileUploadError").addClass("hidden");
                         successSubmit = true;
-                    }else {
+                    } else {
                         $("#fileUploadError").removeClass("hidden");
                         successSubmit = false;
                     }
@@ -263,10 +264,15 @@
 
 
             $("#submit").click(function () {
+                //
+                alert("敬请期待！");
+                return;
+                //
                 $.ajax({
                     type: "post",
                     url: "/activity/createRoutineActivity.do",
                     data: {
+                        fileName: fileName,
                         activityName: $("input[name=activityName]").val(),
                         originator: $("input[name=originator]").val(),
                         type: $("input[name=myRadio]:checked").val(),
@@ -281,7 +287,7 @@
                     },
                     success: function (result) {
                         if (result.success) {
-                            window.location.href="signinBoard.html"
+                            window.location.href = "signinBoard.html"
                         } else if (!result.success) {
                             alert("提交失败！" + result.msg);
                         }
@@ -352,7 +358,7 @@
                     <a href="/activity/downloadHintExcel.do">下载示例Excel文件</a>
                 </div>
             </div>
-            <div  class="form-group fontSize14 ">
+            <div class="form-group fontSize14 ">
                 <label for="inputOriginator" class="col-sm-2 control-label">
                 </label>
                 <div class="col-sm-10 col-lg-3">
@@ -383,8 +389,8 @@
             <button id="submit" class="btn btn-sm btn-warning btn-block" type="button">立即提交</button>
 
         </form>
-            <input id="fileUpload" class="hidden" type="file" name="excelFile"
-                   accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+        <input id="fileUpload" class="hidden" type="file" name="excelFile"
+               accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
     </div>
 </div>
 

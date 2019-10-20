@@ -11,6 +11,7 @@ import com.qiandao8.qiandao8.domain.UserInfo;
 import com.qiandao8.qiandao8.mapper.ActivityMapper;
 import com.qiandao8.qiandao8.qo.ActivityQueryObject;
 import com.qiandao8.qiandao8.service.IActivityService;
+import com.qiandao8.qiandao8.util.ExcelUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,29 +72,28 @@ public class ActivityServiceImpl implements IActivityService {
 
     @Override
     @Transactional
-    public ServerResponse createRoutineActivity(Activity activity) {
+    public ServerResponse createRoutineActivity(Activity activity, String excelFileName) {
+        if (StringUtils.isBlank(activity.getActivityName())
+                || StringUtils.isBlank(activity.getOriginator())) {
+            return ServerResponse.createByErrorMessage("创建活动失败!非法参数！");
+        }
+        activity.setId(null);
+        activity.setStatus(Activity.STATES_NORMAL);
+        activity.setParticipantsNums(0);
+        activity.setOriginatorId(SessionContext.getCurrentUser().getId());
+
+        // 用excelUtils读取数据，创建活动期间不做处理
         try {
-            if (StringUtils.isBlank(activity.getActivityName())
-                    || StringUtils.isBlank(activity.getOriginator())){
-                return ServerResponse.createByErrorMessage("创建活动失败!非法参数！");
-            }
-            activity.setId(null);
-            activity.setStatus(Activity.STATES_NORMAL);
-            activity.setParticipantsNums(0);
-            activity.setOriginatorId(SessionContext.getCurrentUser().getId());
-
-            // 用excelUtil读
-
-            // =================================
-
-            if (activityMapper.insert(activity) > 0) {
-                // 将最近一次生成的活动放到session中
-                SessionContext.putNearestActivity(activity);
-                return ServerResponse.createBySuccessMessage("创建活动成功！");
-            }
+            activity.setBasicSelc(ExcelUtils.parseSignInRules(ExcelUtils.PROJECT_ROOT + ExcelUtils.EXCEL_FILE_FOLDER_RULES + excelFileName));
         } catch (Exception e) {
             e.printStackTrace();
-            return ServerResponse.createByErrorMessage("创建活动失败!");
+            return ServerResponse.createByErrorMessage("创建活动失败!请检查Excel格式！");
+        }
+
+        if (activityMapper.insert(activity) > 0) {
+            // 将最近一次生成的活动放到session中
+            SessionContext.putNearestActivity(activity);
+            return ServerResponse.createBySuccessMessage("创建活动成功！");
         }
 
         return ServerResponse.createByErrorMessage("创建活动失败!");

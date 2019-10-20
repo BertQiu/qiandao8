@@ -6,6 +6,7 @@ $.ajax({
     url: "/attend/getAttendActivityInfo.do",
     dataType: "json",
     success: function (result) {
+        console.log(result);
         if (!result.success) {
             window.location.href = "/error/errorPage.html";
         }

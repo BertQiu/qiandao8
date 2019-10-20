@@ -32,6 +32,6 @@ mybatis:
   configuration:
    log-prefix: mybatis
 #   打印日志文件
-#   log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+   log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 server:
   port: 80

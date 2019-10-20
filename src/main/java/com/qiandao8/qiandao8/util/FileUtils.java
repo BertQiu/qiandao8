@@ -1,5 +1,7 @@
 package com.qiandao8.qiandao8.util;
 
+import org.springframework.util.ClassUtils;
+
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -9,6 +11,8 @@ import java.io.FileOutputStream;
  * Description TODO
  */
 public class FileUtils {
+
+    public static String PROJECT_ROOT = ClassUtils.getDefaultClassLoader().getResource("").getPath();
 
     public static final String SEPARATER = ".";
 
@@ -28,13 +32,17 @@ public class FileUtils {
     }
 
     public static void uploadFile(byte[] file, String filePath, String fileName) throws Exception {
-        File targetFile = new File(filePath);
-        if(!targetFile.exists()){
-            targetFile.mkdirs();
+        File targetFilePath = new File(filePath);
+        if(!targetFilePath.exists()){
+            targetFilePath.mkdirs();
         }
         FileOutputStream out = new FileOutputStream(filePath+fileName);
         out.write(file);
         out.flush();
         out.close();
+    }
+
+    public static boolean isExists(String url) {
+       return new File(url).exists();
     }
 }

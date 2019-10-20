@@ -114,6 +114,18 @@
             <if test="endTime!=null">
                 and end_Time &lt; #{endTime}
             </if>
+            <if test="endTime!=null">
+                and end_Time &lt; #{endTime}
+            </if>
+            <if test="type!=null">
+                and type = #{type}
+            </if>
+            <if test="typeStart!=null">
+                and type &gt;= #{typeStart}
+            </if>
+            <if test="typeEnd!=null">
+                and type &lt;= #{typeEnd}
+            </if>
         </where>
         order by id desc
     </select>

@@ -13,7 +13,10 @@ body {
 .board #left {
     width: 560px;
     height: 760px;
-    background-color: #cccccc;
+    /*background-color: #cccccc;*/
+    background: url("../images/wallback.png") no-repeat ;
+    -webkit-background-size: cover;
+    background-size: cover;
 }
 
 .board #left .title {

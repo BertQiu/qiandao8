@@ -42,7 +42,6 @@ public class Qiandao8ApplicationTests {
 
 //        String excelFile = ExcelUtils.createExcelFile(activity, attendances);
 //        System.out.println(excelFile);
-        System.out.println(Arrays.toString(ExcelUtils.parseSignInRules("")));
 
     }
 

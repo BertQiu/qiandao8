@@ -11,12 +11,15 @@ import com.qiandao8.qiandao8.mapper.ActivityMapper;
 import com.qiandao8.qiandao8.mapper.AttendanceMapper;
 import com.qiandao8.qiandao8.qo.AttendanceQueryObject;
 import com.qiandao8.qiandao8.service.IAttendanceService;
+import com.qiandao8.qiandao8.util.ExcelUtils;
+import com.qiandao8.qiandao8.util.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -98,14 +101,50 @@ public class AttendanceServiceImpl implements IAttendanceService {
 
     @Override
     public ServerResponse listAttendanceInfo(AttendanceQueryObject queryObject) {
-        // 权限检查
-        Long oid = SessionContext.getCurrentUser().getId();
-        int i = activityMapper.checkActivityCreatedByOid(queryObject.getAid(), oid);
-        if (i == 0) {
+        if (!checkPermission(queryObject.getAid())) {
             return ServerResponse.createByErrorMessage("没有权限！");
         }
         PageHelper.startPage(queryObject.getCurrentPage(), queryObject.getPageSize());
         PageInfo<Attendance> data = new PageInfo<>(attendanceMapper.listAttendanceByAid(queryObject.getAid()));
         return ServerResponse.createBySuccess(data);
+    }
+
+    /**
+     * 检查权限
+     * @param aid 活动id
+     * @return 如果有权限，返回true
+     */
+    private boolean checkPermission(Long aid) {
+        // 权限检查
+        Long oid = SessionContext.getCurrentUser().getId();
+        int i = activityMapper.checkActivityCreatedByOid(aid, oid);
+        return i != 0;
+    }
+
+    /**
+     * 生成的excel文件名 activityName + activityId
+     * @param aid
+     * @return
+     */
+    @Override
+    public String createAttendanceExcel(Long aid) {
+        if (!checkPermission(aid)) {
+            throw new RuntimeException("没有足够的权限");
+        }
+        Activity activity = activityMapper.selectByPrimaryKey(aid);
+        List<Attendance> attendances = attendanceMapper.listAttendanceByAid(aid);
+        // 先去检查是否已经生成了excel
+        String fileName = activity.getActivityName() + activity.getId()+ExcelUtils.DEFAULT_SURFIX;
+        String filePath = ExcelUtils.PROJECT_ROOT + ExcelUtils.EXCEL_FILE_FOLDER_ATTENDANCE + fileName;
+        if (FileUtils.isExists(filePath)) {
+            return fileName;
+        }
+        try {
+            ExcelUtils.createExcelFile(activity, attendances);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+        return fileName;
     }
 }

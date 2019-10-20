@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 15/10/2019 21:21:15
+ Date: 20/10/2019 13:03:31
 */
 
 SET NAMES utf8mb4;
@@ -35,8 +35,10 @@ CREATE TABLE `activity`  (
   `create_time` datetime(0) DEFAULT NULL,
   `update_time` datetime(0) DEFAULT NULL,
   `originator_id` bigint(20) DEFAULT NULL,
+  `static_qrcode_token` char(32) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `rule_excel_name` char(32) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 47 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 72 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for attendance
@@ -53,7 +55,7 @@ CREATE TABLE `attendance`  (
   `current_location` varchar(80) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `verify_password` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for user_info
@@ -69,8 +71,9 @@ CREATE TABLE `user_info`  (
   `create_time` datetime(6) DEFAULT NULL,
   `update_time` datetime(6) DEFAULT NULL,
   `last_login_time` datetime(0) DEFAULT NULL,
+  `ip_addr` char(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `username`(`username`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 60 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;

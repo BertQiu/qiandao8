@@ -156,9 +156,6 @@ function deleteActivity(aid) {
     });
 }
 
-function downloadExcel() {
-    var aid = aid;
-}
 $(function () {
     initData();
     render();
@@ -168,4 +165,7 @@ $(function () {
             deleteActivity(aid);
         }
     });
+    $("#downLoadBtn").click(function () {
+        window.location.href = "/attend/downloadExcel.do?aid=" + aid;
+    })
 });
