@@ -133,7 +133,12 @@ public class ExcelUtils {
             fillAttendanceInfo(sheet, rowNumber, cellNumber, "签到时间", checkInTime);
             // -------------      END       -----------
         }
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, componentNumber / attendances.size()));
+        System.out.println("———————————————————————————————————————————————");
+        System.out.println(componentNumber);
+        System.out.println("———————————————————————————————————————————————");
+        System.out.println((attendances.size()==0?1:attendances.size()));
+        System.out.println("———————————————————————————————————————————————");
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, componentNumber / (attendances.size()==0?1:attendances.size())));
         // 判断文件夹是否存在
         File targetFilePath = new File(PROJECT_ROOT +EXCEL_FILE_FOLDER_ATTENDANCE);
         if(!targetFilePath.exists()){

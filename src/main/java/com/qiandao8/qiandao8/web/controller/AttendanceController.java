@@ -92,8 +92,6 @@ public class AttendanceController {
     @RequestMapping(value = "downloadExcel.do", method = RequestMethod.GET)
     @RequireLogin
     public void downloadExcel(Long aid, HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("nimda fsd ");
-        System.out.println("———————————————————————————————————————————————");
         // 生成excel
         String fileName = attendanceService.createAttendanceExcel(aid);
         String folderPath = ExcelUtils.PROJECT_ROOT + ExcelUtils.EXCEL_FILE_FOLDER_ATTENDANCE;
